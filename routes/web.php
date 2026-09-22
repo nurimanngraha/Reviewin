@@ -98,8 +98,6 @@ Route::prefix('portal')
         Route::get('/devices', [PortalDeviceController::class, 'index'])->name('devices.index');
         Route::get('/devices/{device}', [PortalDeviceController::class, 'show'])->name('devices.show');
         Route::put('/devices/{device}', [PortalDeviceController::class, 'update'])->name('devices.update');
-        Route::get('/devices/{device}/download/svg', [PortalDeviceController::class, 'downloadSvg'])->name('devices.download.svg');
-        Route::get('/devices/{device}/download/png', [PortalDeviceController::class, 'downloadPng'])->name('devices.download.png');
 
         // Business profile and Google Review link settings
         Route::get('/settings', [PortalSettingsController::class, 'index'])->name('settings');

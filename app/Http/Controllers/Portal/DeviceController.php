@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Portal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Device;
-use App\Services\QrCodeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,10 +12,6 @@ use Illuminate\View\View;
 
 class DeviceController extends Controller
 {
-    public function __construct(
-        protected QrCodeService $qrCodeService
-    ) {}
-
     /**
      * List devices belonging to the logged-in owner
      */
@@ -36,7 +31,7 @@ class DeviceController extends Controller
     }
 
     /**
-     * Show device details, QR preview, NFC URL
+     * Show physical card details and usage telemetry
      */
     public function show(Device $device): View
     {
@@ -46,11 +41,8 @@ class DeviceController extends Controller
             $q->latest('scanned_at')->take(15);
         }]);
 
-        $qrSvg = $this->qrCodeService->generateSvg($device->qr_url, 260);
-
         return view('portal.devices.show', [
             'device' => $device,
-            'qrSvg' => $qrSvg,
         ]);
     }
 
@@ -70,26 +62,6 @@ class DeviceController extends Controller
         $device->update(['name' => $validated['name']]);
 
         return back()->with('success', 'Nama label perangkat berhasil diperbarui!');
-    }
-
-    /**
-     * Download QR Code SVG
-     */
-    public function downloadSvg(Device $device): Response
-    {
-        $this->authorizeDevice($device);
-
-        return $this->qrCodeService->downloadSvg($device);
-    }
-
-    /**
-     * Download QR Code PNG
-     */
-    public function downloadPng(Device $device): Response
-    {
-        $this->authorizeDevice($device);
-
-        return $this->qrCodeService->downloadPng($device);
     }
 
     /**

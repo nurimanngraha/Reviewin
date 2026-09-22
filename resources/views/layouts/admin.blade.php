@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('body')
-<div x-data="{ sidebarOpen: false }" class="min-h-screen bg-slate-100 flex">
+<div x-data="{ sidebarOpen: false }" class="h-screen bg-slate-100 flex overflow-hidden">
 
     <!-- Mobile Sidebar Backdrop -->
     <div x-show="sidebarOpen" 
@@ -16,7 +16,7 @@
 
     <!-- Sidebar Container -->
     <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-           class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-200 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col shadow-2xl">
+           class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-200 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-y-0 shrink-0 flex flex-col shadow-2xl h-screen">
         
         <!-- Brand Logo -->
         <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800 bg-slate-950">
@@ -110,10 +110,10 @@
     </aside>
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+    <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         <!-- Topbar Header -->
-        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shadow-sm">
+        <header class="h-16 shrink-0 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shadow-sm z-10">
             <div class="flex items-center gap-3">
                 <button @click="sidebarOpen = true" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>

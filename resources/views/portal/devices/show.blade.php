@@ -4,7 +4,7 @@
 @section('page_title', 'Perangkat: ' . $device->device_code)
 
 @section('content')
-<div class="space-y-6" x-data="{ copiedNfc: false }">
+<div class="space-y-6">
 
     <div class="flex items-center justify-between">
         <a href="{{ route('portal.devices.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors">
@@ -18,53 +18,113 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Left: QR Code & NFC Box -->
+        <!-- Left: Physical Card Information & Unit Status -->
         <div class="space-y-6">
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 text-center">
-                <!-- QR Code SVG Container -->
-                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl inline-block shadow-inner mb-4">
-                    <div class="w-60 h-60 flex items-center justify-center mx-auto">
-                        {!! $qrSvg !!}
+            
+            <!-- Virtual Card Representation -->
+            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden border border-slate-700/60">
+                <!-- Background Glow -->
+                <div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none"></div>
+                <div class="absolute -left-8 -top-8 w-36 h-36 rounded-full bg-indigo-500/10 blur-2xl pointer-events-none"></div>
+
+                <div class="flex items-center justify-between mb-6 relative z-10">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center backdrop-blur">
+                            <i class="fab fa-google text-white text-xs"></i>
+                        </div>
+                        <span class="font-extrabold text-xs tracking-wider uppercase text-slate-200">ReviewIn Card</span>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 uppercase tracking-wider">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Aktif
+                    </span>
+                </div>
+
+                <!-- EMV Chip & Contactless Wave -->
+                <div class="flex items-center justify-between my-4 relative z-10">
+                    <div class="w-10 h-8 rounded bg-amber-300/80 border border-amber-400/60 shadow-inner flex items-center justify-center">
+                        <div class="w-7 h-5 border border-amber-600/40 rounded-xs grid grid-cols-2 gap-0.5 p-0.5 opacity-60">
+                            <div class="border-r border-amber-700/30"></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="text-slate-400 flex items-center gap-1" title="Contactless NFC & QR Smart Card">
+                        <svg class="w-6 h-6 rotate-90 text-emerald-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                        </svg>
                     </div>
                 </div>
 
-                <h3 class="font-mono font-extrabold text-lg text-slate-900 tracking-tight">{{ $device->device_code }}</h3>
-                <p class="text-xs text-slate-500 mt-0.5">{{ $device->name }}</p>
+                <!-- Device Code -->
+                <div class="my-4 relative z-10">
+                    <span class="text-[10px] uppercase font-semibold text-slate-400 tracking-wider block">Kode Kartu Fisik</span>
+                    <span class="font-mono text-xl font-extrabold text-white tracking-widest block mt-0.5">{{ $device->device_code }}</span>
+                </div>
 
-                <!-- Download Buttons -->
-                <div class="grid grid-cols-2 gap-2 mt-5">
-                    <a href="{{ route('portal.devices.download.svg', $device) }}" 
-                       class="py-2.5 px-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 text-xs transition-colors flex items-center justify-center gap-1.5">
-                        <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        <span>Unduh SVG</span>
-                    </a>
-                    <a href="{{ route('portal.devices.download.png', $device) }}" 
-                       class="py-2.5 px-3 rounded-xl font-semibold text-white bg-slate-900 hover:bg-slate-800 text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        <span>Unduh PNG</span>
-                    </a>
+                <!-- Business & Type -->
+                <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs relative z-10">
+                    <div>
+                        <span class="text-[10px] uppercase text-slate-400 block font-semibold">Toko</span>
+                        <span class="font-bold text-white block truncate max-w-[140px]">{{ $device->business?->name }}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase text-slate-400 block font-semibold">Tipe Unit</span>
+                        <span class="font-mono font-bold text-emerald-400 uppercase text-[11px] block">{{ str_replace('_', ' + ', $device->type) }}</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- NFC Configuration Box -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
-                <div class="flex items-center justify-between">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                        <span>Link Kartu NFC</span>
+            <!-- Card Specs & Order Notice -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 mb-2">
+                        <i class="fas fa-info-circle text-emerald-600"></i>
+                        <span>Informasi Unit Fisik</span>
                     </h4>
-                    <span class="text-[10px] text-slate-400">Tag URL</span>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Kartu fisik ini telah diprogram langsung dengan link Google Review toko Anda. Pelanggan cukup mendekatkan smartphone (NFC) atau scan kamera ke kartu fisik di meja kasir.
+                    </p>
                 </div>
-                <div class="relative">
-                    <input type="text" readonly value="{{ $device->nfc_url }}" id="nfcUrlInput"
-                           class="w-full bg-slate-50 border-slate-200 rounded-xl text-xs font-mono py-2 pl-3 pr-20 text-slate-700">
-                    <button type="button" 
-                            @click="navigator.clipboard.writeText('{{ $device->nfc_url }}'); copiedNfc = true; setTimeout(() => copiedNfc = false, 2000)"
-                            class="absolute right-1 top-1 bottom-1 px-3 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition-colors">
-                        <span x-text="copiedNfc ? 'Tersalin!' : 'Salin'"></span>
-                    </button>
+
+                <div class="divide-y divide-slate-100 text-xs">
+                    <div class="py-2 flex items-center justify-between">
+                        <span class="text-slate-500">Status Perangkat</span>
+                        <span class="font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[11px]">Aktif & Siap Digunakan</span>
+                    </div>
+                    @if(!empty($device->activation_code))
+                        <div class="py-2 flex items-center justify-between">
+                            <span class="text-slate-500">Kode Aktivasi Kartu</span>
+                            <span class="font-mono font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 text-[11px]">
+                                {{ $device->activation_code }}
+                            </span>
+                        </div>
+                    @endif
+                    <div class="py-2 flex items-center justify-between">
+                        <span class="text-slate-500">Terhubung Sejak</span>
+                        <span class="font-medium text-slate-800">
+                            {{ $device->activated_at ? $device->activated_at->translatedFormat('d M Y') : '-' }}
+                        </span>
+                    </div>
+                    <div class="py-2 flex items-center justify-between">
+                        <span class="text-slate-500">Scan Terakhir</span>
+                        <span class="font-medium text-slate-800">
+                            {{ $device->last_scanned_at ? $device->last_scanned_at->diffForHumans() : 'Belum pernah' }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Callout: Need more units? -->
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
+                    <div class="flex items-center gap-1.5 text-slate-900 font-bold text-[11px] mb-1">
+                        <i class="fas fa-plus-circle text-emerald-600"></i>
+                        <span>Butuh Kartu Tambahan?</span>
+                    </div>
+                    <p class="text-[11px] leading-relaxed text-slate-500">
+                        Untuk menambah unit kartu fisik atau stand akrilik baru pada kasir atau meja lainnya, silakan hubungi <strong>Administrator</strong>.
+                    </p>
                 </div>
             </div>
+
         </div>
 
         <!-- Right: Rename Label, Target Review, and Logs -->
