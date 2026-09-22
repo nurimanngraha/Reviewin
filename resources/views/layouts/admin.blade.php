@@ -19,15 +19,9 @@
            class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-200 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-y-0 shrink-0 flex flex-col shadow-2xl h-screen">
         
         <!-- Brand Logo -->
-        <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800 bg-slate-950">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform shrink-0">
-                    <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech Logo" class="w-full h-full object-contain">
-                </div>
-                <div>
-                    <span class="text-lg font-bold text-white tracking-tight">Cre<span class="text-indigo-400">Tech</span></span>
-                    <span class="block text-[10px] uppercase tracking-wider text-brand-400 font-semibold">Admin Panel</span>
-                </div>
+        <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800 bg-slate-950">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center group overflow-hidden">
+                <img src="{{ asset('assets/CreTechNavbarAdmin.svg') }}" alt="CreTech Admin" class="h-14 w-auto object-contain max-w-[190px] group-hover:scale-105 transition-transform">
             </a>
             <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>

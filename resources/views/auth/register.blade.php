@@ -9,11 +9,8 @@
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         <div class="text-center mb-8">
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-3 group">
-                <div class="w-12 h-12 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-xl shadow-emerald-500/30 group-hover:scale-105 transition-transform shrink-0">
-                    <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech Logo" class="w-full h-full object-contain">
-                </div>
-                <span class="text-3xl font-black text-white tracking-tight">Cre<span class="text-emerald-400">Tech</span></span>
+            <a href="{{ route('home') }}" class="inline-block group hover:scale-105 transition-transform">
+                <img src="{{ asset('assets/CreTechlogin.svg') }}" alt="CreTech" class="h-14 sm:h-16 w-auto mx-auto object-contain drop-shadow-md">
             </a>
             <h2 class="mt-4 text-2xl font-bold tracking-tight text-white">Daftar Akun Pemilik Bisnis</h2>
             <p class="mt-1 text-sm text-slate-400">

@@ -8,11 +8,8 @@
         
         <!-- Header Brand -->
         <div class="text-center mb-6">
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-3 group">
-                <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 group-hover:scale-105 transition-transform">
-                    <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech" class="w-full h-full object-contain">
-                </div>
-                <span class="text-2xl font-black text-slate-900 tracking-tight">Cre<span class="text-emerald-600">Tech</span></span>
+            <a href="{{ route('home') }}" class="inline-block mb-3 group hover:scale-105 transition-transform">
+                <img src="{{ asset('assets/CreTechlogin.svg') }}" alt="CreTech" class="h-14 sm:h-16 w-auto mx-auto object-contain drop-shadow-sm">
             </a>
             <div>
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold mb-3">
