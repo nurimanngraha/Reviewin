@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard - ReviewIn')
+@section('title', 'Admin Dashboard - CreTech')
 @section('page_title', 'Ringkasan & Statistik Sistem')
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'ReviewIn - Platform Pengelolaan QR Code & NFC Google Review Terpadu')
+@section('title', 'CreTech - Platform Pengelolaan QR Code & NFC Google Review Terpadu')
 
 @section('body')
 <div class="min-h-screen bg-slate-900 text-slate-100 flex flex-col selection:bg-brand-500 selection:text-white relative overflow-hidden">
@@ -13,12 +13,9 @@
     <!-- Navigation Header -->
     <header class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between border-b border-slate-800">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                </svg>
+            <div class="h-11 px-3 py-1 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                <img src="{{ asset('assets/CreTechlogo.svg') }}" alt="CreTech" class="h-8 w-auto object-contain">
             </div>
-            <span class="text-xl font-bold tracking-tight text-white">ReviewIn</span>
         </a>
 
         <div class="flex items-center gap-3">
@@ -212,7 +209,7 @@
 
     <!-- Footer -->
     <footer class="relative z-10 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
-        ReviewIn &copy; {{ date('Y') }} - Sistem Pengelolaan QR Code & NFC Google Review. Built with Laravel 11, Tailwind CSS, Blade & Alpine.js.
+        CreTech &copy; {{ date('Y') }} - Sistem Pengelolaan QR Code & NFC Google Review. Built with Laravel 11, Tailwind CSS, Blade & Alpine.js.
     </footer>
 </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Detail Bisnis ' . $business->name . ' - ReviewIn')
+@section('title', 'Detail Bisnis ' . $business->name . ' - CreTech')
 @section('page_title', 'Detail Bisnis: ' . $business->name)
 
 @section('content')

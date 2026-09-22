@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Masuk ke Akun - ReviewIn')
+@section('title', 'Masuk ke Akun - CreTech')
 
 @section('body')
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -11,12 +11,10 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         <div class="text-center mb-8">
             <a href="{{ route('home') }}" class="inline-flex items-center gap-3 group">
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-500 to-indigo-400 flex items-center justify-center text-white shadow-xl shadow-brand-500/30 group-hover:scale-105 transition-transform">
-                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                    </svg>
+                <div class="w-12 h-12 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-xl shadow-brand-500/30 group-hover:scale-105 transition-transform shrink-0">
+                    <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech Logo" class="w-full h-full object-contain">
                 </div>
-                <span class="text-2xl font-extrabold text-white tracking-tight">ReviewIn</span>
+                <span class="text-3xl font-black text-white tracking-tight">Cre<span class="text-emerald-400">Tech</span></span>
             </a>
             <h2 class="mt-4 text-2xl font-bold tracking-tight text-white">Masuk ke Akun Anda</h2>
             <p class="mt-1 text-sm text-slate-400">

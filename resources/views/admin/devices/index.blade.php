@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Manajemen Perangkat QR & NFC - ReviewIn')
+@section('title', 'Manajemen Perangkat QR & NFC - CreTech')
 @section('page_title', 'Daftar Perangkat QR & NFC')
 
 @section('content')

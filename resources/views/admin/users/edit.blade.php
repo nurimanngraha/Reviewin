@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Pengguna ' . $user->name . ' - ReviewIn')
+@section('title', 'Edit Pengguna ' . $user->name . ' - CreTech')
 @section('page_title', 'Edit Pengguna: ' . $user->name)
 
 @section('content')

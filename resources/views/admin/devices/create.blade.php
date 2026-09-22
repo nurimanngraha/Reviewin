@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Buat Perangkat Baru - ReviewIn')
+@section('title', 'Buat Perangkat Baru - CreTech')
 @section('page_title', 'Buat Perangkat QR & NFC Baru')
 
 @section('content')

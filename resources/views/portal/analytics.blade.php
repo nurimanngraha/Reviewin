@@ -1,6 +1,6 @@
 @extends('layouts.portal')
 
-@section('title', 'Statistik & Analitik Penggunaan - ReviewIn')
+@section('title', 'Statistik & Analitik Penggunaan - CreTech')
 @section('page_title', 'Statistik & Analitik Ulasan')
 
 @section('content')

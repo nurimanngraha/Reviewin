@@ -1,6 +1,6 @@
 @extends('layouts.portal')
 
-@section('title', 'Dashboard Bisnis - ReviewIn')
+@section('title', 'Dashboard Bisnis - CreTech')
 @section('page_title', 'Dashboard Bisnis')
 
 @section('content')

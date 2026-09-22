@@ -1,6 +1,6 @@
 @extends('layouts.portal')
 
-@section('title', 'Pengaturan Bisnis & Link Google Review - ReviewIn')
+@section('title', 'Pengaturan Bisnis & Link Google Review - CreTech')
 @section('page_title', 'Pengaturan Bisnis & Link Google Review')
 
 @section('content')

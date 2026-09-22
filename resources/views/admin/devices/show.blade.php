@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Detail Perangkat ' . $device->device_code . ' - ReviewIn')
+@section('title', 'Detail Perangkat ' . $device->device_code . ' - CreTech')
 @section('page_title', 'Detail Perangkat: ' . $device->device_code)
 
 @section('content')

@@ -1,38 +1,48 @@
 @extends('layouts.portal')
 
-@section('title', 'Perangkat ' . $device->device_code . ' - ReviewIn')
-@section('page_title', 'Perangkat: ' . $device->device_code)
+@section('title', 'Perangkat ' . $device->device_code . ' - CreTech')
 
 @section('content')
-<div class="space-y-6">
+<div class="space-y-6" x-data="{ copiedNfc: false }">
+    <!-- Breadcrumb & Status Topbar -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200">
+        <div>
+            <a href="{{ route('portal.devices.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors mb-1">
+                <i class="fas fa-arrow-left text-[10px]"></i>
+                <span>Kembali ke Daftar Perangkat</span>
+            </a>
+            <h1 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                Perangkat: <span class="font-mono text-emerald-600">{{ $device->device_code }}</span>
+            </h1>
+        </div>
 
-    <div class="flex items-center justify-between">
-        <a href="{{ route('portal.devices.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-            <span>Kembali ke Daftar Perangkat</span>
-        </a>
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
-            Status: {{ ucfirst($device->status) }}
-        </span>
+        <div class="flex items-center gap-2">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider
+                {{ $device->status === 'active' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-700' }}">
+                Status: {{ $device->status }}
+            </span>
+        </div>
     </div>
 
+    <!-- Main Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        <!-- Left: Physical Card Information & Unit Status -->
-        <div class="space-y-6">
+        <!-- Left: Realistic Virtual Card Representation -->
+        <div class="space-y-4">
             
-            <!-- Virtual Card Representation -->
-            <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-950 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden border border-slate-700/60">
-                <!-- Background Glow -->
-                <div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none"></div>
-                <div class="absolute -left-8 -top-8 w-36 h-36 rounded-full bg-indigo-500/10 blur-2xl pointer-events-none"></div>
+            <!-- Virtual Card Mockup Container -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-tr from-slate-950 via-slate-900 to-slate-800 p-6 shadow-xl border border-slate-700 text-white min-h-[220px] flex flex-col justify-between group">
+                <!-- Card Background Accents -->
+                <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute -left-10 -top-10 w-36 h-36 bg-blue-500/10 rounded-full blur-xl pointer-events-none"></div>
 
+                <!-- Top Row: Card Brand & Status -->
                 <div class="flex items-center justify-between mb-6 relative z-10">
                     <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center backdrop-blur">
-                            <i class="fab fa-google text-white text-xs"></i>
+                        <div class="w-7 h-7 rounded-lg bg-white p-1 flex items-center justify-center shadow">
+                            <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech" class="w-full h-full object-contain">
                         </div>
-                        <span class="font-extrabold text-xs tracking-wider uppercase text-slate-200">ReviewIn Card</span>
+                        <span class="font-extrabold text-xs tracking-wider uppercase text-slate-200">CreTech Card</span>
                     </div>
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 uppercase tracking-wider">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>

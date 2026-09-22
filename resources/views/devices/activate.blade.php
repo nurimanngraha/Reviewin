@@ -8,9 +8,17 @@
         
         <!-- Header Brand -->
         <div class="text-center mb-6">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold mb-3">
-                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                <span>Aktivasi Perangkat Baru (Scan Pertama)</span>
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2.5 mb-3 group">
+                <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center shadow-md border border-slate-200 group-hover:scale-105 transition-transform">
+                    <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech" class="w-full h-full object-contain">
+                </div>
+                <span class="text-2xl font-black text-slate-900 tracking-tight">Cre<span class="text-emerald-600">Tech</span></span>
+            </a>
+            <div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold mb-3">
+                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Aktivasi Perangkat Baru (Scan Pertama)</span>
+                </div>
             </div>
             <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Setup Kartu Google Review</h1>
             <p class="mt-1.5 text-xs sm:text-sm text-slate-600">
@@ -267,7 +275,7 @@
         @endguest
 
         <div class="mt-8 text-center text-xs text-slate-400">
-            Sistem Pengelolaan QR Code & NFC Google Review &copy; ReviewIn
+            Sistem Pengelolaan QR Code & NFC Google Review &copy; CreTech
         </div>
     </div>
 </div>

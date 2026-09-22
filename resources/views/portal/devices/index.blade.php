@@ -1,6 +1,6 @@
 @extends('layouts.portal')
 
-@section('title', 'Perangkat Saya - ReviewIn')
+@section('title', 'Perangkat Saya - CreTech')
 @section('page_title', 'Perangkat QR Code & NFC Saya')
 
 @section('content')

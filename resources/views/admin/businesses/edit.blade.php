@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Bisnis ' . $business->name . ' - ReviewIn')
+@section('title', 'Edit Bisnis ' . $business->name . ' - CreTech')
 @section('page_title', 'Edit Data Bisnis: ' . $business->name)
 
 @section('content')

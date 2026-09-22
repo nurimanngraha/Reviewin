@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Log Telemetri Scan & Tap - ReviewIn')
+@section('title', 'Log Telemetri Scan & Tap - CreTech')
 @section('page_title', 'Log Telemetri Pemindaian QR & NFC')
 
 @section('content')

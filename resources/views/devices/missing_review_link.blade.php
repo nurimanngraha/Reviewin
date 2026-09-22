@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Link Google Review Belum Diatur - ReviewIn')
+@section('title', 'Link Google Review Belum Diatur - CreTech')
 
 @section('body')
 <div class="min-h-screen bg-slate-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">

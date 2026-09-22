@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Perangkat Tidak Ditemukan - ReviewIn')
+@section('title', 'Perangkat Tidak Ditemukan - CreTech')
 
 @section('body')
 <div class="min-h-screen bg-slate-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -18,7 +18,7 @@
 
         <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Perangkat Tidak Terdaftar</h1>
         <p class="mt-2 text-sm text-slate-600 leading-relaxed">
-            Kode perangkat <span class="font-mono font-bold text-slate-900 bg-slate-200 px-2 py-0.5 rounded">{{ $device_code ?? 'TIDAK_DIKENAL' }}</span> tidak ditemukan dalam database sistem ReviewIn.
+            Kode perangkat <span class="font-mono font-bold text-slate-900 bg-slate-200 px-2 py-0.5 rounded">{{ $device_code ?? 'TIDAK_DIKENAL' }}</span> tidak ditemukan dalam database sistem CreTech.
         </p>
 
         <div class="mt-6 bg-white rounded-2xl shadow-sm border border-slate-200 p-5 text-left text-xs text-slate-600 space-y-2">
