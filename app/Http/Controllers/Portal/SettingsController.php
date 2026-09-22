@@ -58,45 +58,4 @@ class SettingsController extends Controller
 
         return back()->with('success', 'Pengaturan bisnis dan Link Google Review berhasil diperbarui!');
     }
-
-    /**
-     * Create a new business for this owner
-     */
-    public function storeBusiness(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'category' => ['nullable', 'string', 'max:100'],
-            'address' => ['nullable', 'string', 'max:500'],
-            'phone' => ['nullable', 'string', 'max:30'],
-            'email' => ['nullable', 'email', 'max:255'],
-            'google_place_id' => ['nullable', 'string', 'max:255'],
-            'google_review_url' => ['required', 'url', 'max:1000'],
-        ], [
-            'name.required' => 'Nama bisnis wajib diisi.',
-            'google_review_url.required' => 'Link Google Review wajib diisi.',
-            'google_review_url.url' => 'Format URL Google Review tidak valid.',
-        ]);
-
-        $slug = Str::slug($validated['name']);
-        if (Business::where('slug', $slug)->exists()) {
-            $slug .= '-' . Str::random(5);
-        }
-
-        $business = Business::create([
-            'user_id' => Auth::id(),
-            'name' => $validated['name'],
-            'slug' => $slug,
-            'category' => $validated['category'] ?? null,
-            'address' => $validated['address'] ?? null,
-            'phone' => $validated['phone'] ?? null,
-            'email' => $validated['email'] ?? null,
-            'google_place_id' => $validated['google_place_id'] ?? null,
-            'google_review_url' => $validated['google_review_url'],
-            'is_active' => true,
-        ]);
-
-        return redirect()->route('portal.settings', ['business_id' => $business->id])
-            ->with('success', "Bisnis baru '{$business->name}' berhasil ditambahkan!");
-    }
 }

@@ -104,7 +104,6 @@ Route::prefix('portal')
         // Business profile and Google Review link settings
         Route::get('/settings', [PortalSettingsController::class, 'index'])->name('settings');
         Route::put('/settings/business/{business}', [PortalSettingsController::class, 'updateBusiness'])->name('settings.business.update');
-        Route::post('/settings/business', [PortalSettingsController::class, 'storeBusiness'])->name('settings.business.store');
 
         // Analytics
         Route::get('/analytics', [PortalAnalyticsController::class, 'index'])->name('analytics');

@@ -4,7 +4,7 @@
 @section('page_title', 'Pengaturan Bisnis & Link Google Review')
 
 @section('content')
-<div class="max-w-4xl mx-auto space-y-6" x-data="{ newBranchModal: false }">
+<div class="max-w-4xl mx-auto space-y-6">
 
     @if($businesses->count() > 1)
         <!-- Business Switcher Tabs if owner has multiple stores -->
@@ -15,9 +15,6 @@
                     {{ $b->name }}
                 </a>
             @endforeach
-            <button type="button" @click="newBranchModal = true" class="px-3 py-2 text-emerald-700 hover:text-emerald-800 font-bold whitespace-nowrap">
-                + Tambah Cabang Baru
-            </button>
         </div>
     @endif
 
@@ -152,68 +149,19 @@
                 </div>
             </form>
         </div>
-    @endif
-
-    <!-- Add Branch Modal -->
-    <div x-show="newBranchModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-        <div @click.away="newBranchModal = false" class="bg-white rounded-2xl p-6 max-w-lg w-full shadow-2xl border border-slate-100 text-left">
-            <h3 class="text-base font-bold text-slate-900 mb-1">Tambah Cabang / Bisnis Baru</h3>
-            <p class="text-xs text-slate-500 mb-4">Daftarkan cabang toko baru untuk dihubungkan dengan perangkat fisik lainnya.</p>
-
-            <form action="{{ route('portal.settings.business.store') }}" method="POST" class="space-y-4"
-                  x-data="{
-                      branchPlaceId: '',
-                      branchReviewUrl: '',
-                      generateBranchUrl() {
-                          if (this.branchPlaceId && this.branchPlaceId.trim() !== '') {
-                              this.branchReviewUrl = 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(this.branchPlaceId.trim());
-                          }
-                      }
-                  }">
-                @csrf
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nama Bisnis <span class="text-rose-500">*</span></label>
-                    <input type="text" name="name" required placeholder="Contoh: Kopi Kenangan Cabang Kemang" class="w-full rounded-xl border-slate-300 text-sm py-2 px-3">
-                </div>
-                <div>
-                    <div class="flex items-center justify-between mb-1">
-                        <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
-                            <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID
-                        </label>
-                        <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" 
-                           target="_blank" 
-                           class="text-[10px] text-emerald-700 hover:text-emerald-900 font-bold inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-300">
-                            <span>Cari Place ID</span>
-                            <i class="fas fa-external-link-alt text-[8px]"></i>
-                        </a>
-                    </div>
-                    <input type="text" name="google_place_id" x-model="branchPlaceId" @input="generateBranchUrl()"
-                           placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4" 
-                           class="w-full rounded-xl border-slate-300 font-mono text-xs py-2 px-3">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Link Google Review <span class="text-rose-500">*</span></label>
-                    <input type="url" name="google_review_url" x-model="branchReviewUrl" required 
-                           placeholder="https://search.google.com/local/writereview?placeid=..." 
-                           class="w-full rounded-xl border-slate-300 text-xs font-mono py-2 px-3">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Kategori</label>
-                        <input type="text" name="category" placeholder="Cafe & Resto" class="w-full rounded-xl border-slate-300 text-sm py-2 px-3">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">No. Kontak</label>
-                        <input type="text" name="phone" placeholder="0812..." class="w-full rounded-xl border-slate-300 text-sm py-2 px-3">
-                    </div>
-                </div>
-                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
-                    <button type="button" @click="newBranchModal = false" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100">Batal</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 shadow">Simpan Cabang Baru</button>
-                </div>
-            </form>
+    @else
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-12 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+            </div>
+            <h3 class="text-base font-bold text-slate-900">Belum Ada Toko Terhubung</h3>
+            <p class="text-xs text-slate-500 mt-1.5 max-w-md mx-auto leading-relaxed">
+                Toko baru otomatis terdaftar ketika Anda melakukan aktivasi pada kartu Card Review QR Code / NFC yang baru.
+            </p>
         </div>
-    </div>
+    @endif
 
 </div>
 @endsection
