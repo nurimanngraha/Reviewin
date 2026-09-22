@@ -105,7 +105,12 @@
                                         <a href="{{ route('admin.devices.show', $device) }}" class="font-mono font-bold text-slate-900 hover:text-brand-600 block text-xs">
                                             {{ $device->device_code }}
                                         </a>
-                                        <span class="text-[11px] text-slate-500">{{ $device->name }}</span>
+                                        <span class="text-[11px] text-slate-500 block">{{ $device->name }}</span>
+                                        @if(!empty($device->activation_code))
+                                            <span class="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 mt-0.5" title="Kode Kartu (Activation Code) untuk aktivasi">
+                                                <i class="fas fa-key text-[9px] text-amber-600"></i> {{ $device->activation_code }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </td>

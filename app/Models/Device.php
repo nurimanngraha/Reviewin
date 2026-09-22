@@ -14,6 +14,7 @@ class Device extends Model
 
     protected $fillable = [
         'device_code',
+        'activation_code',
         'name',
         'type',
         'business_id',
@@ -26,6 +27,18 @@ class Device extends Model
         'activated_at',
         'last_scanned_at',
     ];
+
+    /**
+     * Generate unique activation code (e.g. ACT-492019)
+     */
+    public static function generateActivationCode(string $prefix = 'ACT'): string
+    {
+        do {
+            $code = $prefix . '-' . mt_rand(100000, 999999);
+        } while (self::where('activation_code', $code)->exists());
+
+        return $code;
+    }
 
     protected function casts(): array
     {

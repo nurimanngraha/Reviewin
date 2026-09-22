@@ -103,9 +103,11 @@ class DeviceController extends Controller
 
             for ($i = 0; $i < $count; $i++) {
                 $uniqueCode = $this->generateUniqueCode($prefix);
+                $activationCode = Device::generateActivationCode();
 
                 Device::create([
                     'device_code' => $uniqueCode,
+                    'activation_code' => $activationCode,
                     'name' => $namePrefix . ' #' . ($i + 1),
                     'type' => $request->input('type', 'qr_nfc'),
                     'status' => 'unactivated',
@@ -115,12 +117,13 @@ class DeviceController extends Controller
             }
 
             return redirect()->route('admin.devices.index')
-                ->with('success', "Berhasil membuat {$created} perangkat baru dengan status unactivated!");
+                ->with('success', "Berhasil membuat {$created} perangkat baru dengan status unactivated dan Kode Kartu unik!");
         }
 
         // Single device creation
         $validated = $request->validate([
             'device_code' => ['nullable', 'string', 'max:30', 'unique:devices,device_code'],
+            'activation_code' => ['nullable', 'string', 'max:30', 'unique:devices,activation_code'],
             'name' => ['required', 'string', 'max:100'],
             'type' => ['required', 'in:qr_nfc,qr_only,nfc_only'],
             'business_id' => ['nullable', 'exists:businesses,id'],
@@ -130,14 +133,20 @@ class DeviceController extends Controller
         ], [
             'name.required' => 'Nama label perangkat wajib diisi.',
             'device_code.unique' => 'Kode perangkat ini sudah digunakan.',
+            'activation_code.unique' => 'Kode aktivasi ini sudah digunakan.',
         ]);
 
         $code = !empty($validated['device_code'])
             ? strtoupper($validated['device_code'])
             : $this->generateUniqueCode();
 
+        $activationCode = !empty($validated['activation_code'])
+            ? strtoupper($validated['activation_code'])
+            : Device::generateActivationCode();
+
         $device = Device::create([
             'device_code' => $code,
+            'activation_code' => $activationCode,
             'name' => $validated['name'],
             'type' => $validated['type'],
             'business_id' => $validated['business_id'] ?? null,
@@ -148,7 +157,7 @@ class DeviceController extends Controller
         ]);
 
         return redirect()->route('admin.devices.show', $device)
-            ->with('success', "Perangkat [{$device->device_code}] berhasil ditambahkan!");
+            ->with('success', "Perangkat [{$device->device_code}] berhasil ditambahkan dengan Kode Kartu [{$device->activation_code}]!");
     }
 
     /**
@@ -187,6 +196,7 @@ class DeviceController extends Controller
     public function update(Request $request, Device $device): RedirectResponse
     {
         $validated = $request->validate([
+            'activation_code' => ['nullable', 'string', 'max:30', 'unique:devices,activation_code,' . $device->id],
             'name' => ['required', 'string', 'max:100'],
             'type' => ['required', 'in:qr_nfc,qr_only,nfc_only'],
             'business_id' => ['nullable', 'exists:businesses,id'],
@@ -194,6 +204,10 @@ class DeviceController extends Controller
             'google_review_url_override' => ['nullable', 'url', 'max:1000'],
             'notes' => ['nullable', 'string', 'max:500'],
         ]);
+
+        if (!empty($validated['activation_code'])) {
+            $validated['activation_code'] = strtoupper($validated['activation_code']);
+        }
 
         $device->update($validated);
 

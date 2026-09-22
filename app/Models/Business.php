@@ -59,4 +59,20 @@ class Business extends Model
     {
         return $this->devices()->where('status', 'active')->count();
     }
+
+    /**
+     * Get Google review URL, falling back to constructing from Place ID
+     */
+    public function getReviewUrlAttribute(): ?string
+    {
+        if (!empty($this->google_review_url)) {
+            return $this->google_review_url;
+        }
+
+        if (!empty($this->google_place_id)) {
+            return 'https://search.google.com/local/writereview?placeid=' . urlencode($this->google_place_id);
+        }
+
+        return null;
+    }
 }

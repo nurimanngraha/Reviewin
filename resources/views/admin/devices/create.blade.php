@@ -108,15 +108,26 @@
         <form action="{{ route('admin.devices.store') }}" method="POST" class="space-y-4">
             @csrf
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label for="device_code" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                         Kode Perangkat (Opsional)
                     </label>
                     <input type="text" id="device_code" name="device_code" value="{{ old('device_code') }}"
-                           placeholder="Kosongkan untuk auto-generate"
+                           placeholder="Auto-generate"
                            class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
                     @error('device_code')
+                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="activation_code" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Kode Kartu (Activation Code)
+                    </label>
+                    <input type="text" id="activation_code" name="activation_code" value="{{ old('activation_code') }}"
+                           placeholder="Auto-generate (ACT-XXXXXX)"
+                           class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
+                    @error('activation_code')
                         <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                     @enderror
                 </div>

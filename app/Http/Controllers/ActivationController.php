@@ -18,7 +18,7 @@ class ActivationController extends Controller
     /**
      * Show device activation page
      */
-    public function show(string $code, Request $request): View|RedirectResponse
+    public function show(string $code, Request $request): \Illuminate\Http\Response|View|RedirectResponse
     {
         $device = Device::with('business')->where('device_code', $code)->first();
 
@@ -43,9 +43,14 @@ class ActivationController extends Controller
             ], 403);
         }
 
-        // Device is unactivated -> Activation form
+        // Device is unactivated -> Enforce Business Owner Login
+        if (!Auth::check()) {
+            return redirect()->route('login', ['redirect' => '/activate/' . $code])
+                ->with('warning', 'Silakan masuk / login terlebih dahulu sebagai Pemilik Bisnis untuk mengaktifkan kartu QR & NFC ini.');
+        }
+
         $user = Auth::user();
-        $userBusinesses = $user ? $user->businesses()->get() : collect();
+        $userBusinesses = $user->businesses()->get();
 
         return view('devices.activate', [
             'device' => $device,
@@ -67,20 +72,21 @@ class ActivationController extends Controller
 
         if ($device->status !== 'unactivated') {
             return redirect()->route('device.activate', ['code' => $code])
-                ->with('error', 'Perangkat ini sudah tidak dalam status unactivated.');
+                ->with('error', 'Perangkat ini sudah aktif atau tidak dalam status unactivated.');
         }
 
         if (!Auth::check()) {
             return redirect()->route('login', ['redirect' => '/activate/' . $code])
-                ->with('warning', 'Silakan login terlebih dahulu untuk mengaktifkan perangkat ini.');
+                ->with('warning', 'Sesi Anda telah berakhir. Silakan login kembali untuk menyelesaikan aktivasi.');
         }
 
         $user = Auth::user();
 
         $rules = [
+            'activation_code' => ['required', 'string', 'max:50'],
             'business_id' => ['nullable', 'exists:businesses,id'],
             'device_label' => ['nullable', 'string', 'max:100'],
-            'google_review_url' => ['required', 'url', 'max:1000'],
+            'google_place_id' => ['required', 'string', 'min:5', 'max:150'],
         ];
 
         // If new business
@@ -92,18 +98,32 @@ class ActivationController extends Controller
         }
 
         $messages = [
-            'google_review_url.required' => 'Link Google Review wajib diisi agar pelanggan dapat diarahkan ke halaman review.',
-            'google_review_url.url' => 'Format Link Google Review tidak valid. Pastikan diawali dengan http:// atau https://.',
-            'business_name.required' => 'Nama bisnis wajib diisi jika mendaftarkan bisnis baru.',
+            'activation_code.required' => 'Kode Kartu (Activation Code) wajib dimasukkan untuk verifikasi perangkat.',
+            'google_place_id.required' => 'Google Place ID wajib diisi untuk menghubungkan lokasi Google Review bisnis Anda.',
+            'business_name.required' => 'Nama bisnis wajib diisi jika Anda mendaftarkan bisnis baru.',
         ];
 
         $validated = $request->validate($rules, $messages);
+
+        // Verify activation code against device record
+        if (!empty($device->activation_code)) {
+            $inputCode = strtoupper(trim($validated['activation_code']));
+            $expectedCode = strtoupper(trim($device->activation_code));
+
+            if ($inputCode !== $expectedCode) {
+                return back()->withInput()->withErrors([
+                    'activation_code' => 'Kode Kartu (Activation Code) yang Anda masukkan tidak sesuai dengan perangkat ini.',
+                ])->with('error', 'Validasi gagal: Kode Kartu tidak cocok.');
+            }
+        }
 
         try {
             $activatedDevice = $this->activationService->activate($device, $user, $validated, $request);
 
             return redirect()->route('device.activated.success', ['code' => $activatedDevice->device_code])
-                ->with('success', 'Selamat! Perangkat berhasil diaktivasi dan siap digunakan.');
+                ->with('success', 'Selamat! Kartu QR & NFC berhasil diaktivasi dan sekarang terhubung dengan bisnis Anda.');
+        } catch (\InvalidArgumentException $e) {
+            return back()->withInput()->withErrors(['activation_code' => $e->getMessage()]);
         } catch (\Throwable $e) {
             return back()->withInput()->with('error', 'Gagal mengaktifkan perangkat: ' . $e->getMessage());
         }

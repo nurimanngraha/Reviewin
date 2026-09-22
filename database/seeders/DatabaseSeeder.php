@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan',
                 'phone' => '021-5551234',
                 'email' => 'senopati@kopikenangan.test',
+                'google_place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
                 'google_review_url' => 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4',
                 'is_active' => true,
             ]
@@ -60,10 +61,11 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => $owner->id,
                 'name' => 'Warung Steak & Shake Bintaro',
-                'category' => 'Restoran Steak',
-                'address' => 'Sektor 7 Bintaro Jaya, Tangerang Selatan',
+                'category' => 'Steakhouse & Grill',
+                'address' => 'Bintaro Jaya Sektor 7, Tangerang Selatan',
                 'phone' => '021-7778899',
                 'email' => 'bintaro@warungsteak.test',
+                'google_place_id' => 'ChIJbe_tDeuEmsRUsoyG83frY5',
                 'google_review_url' => 'https://search.google.com/local/writereview?placeid=ChIJbe_tDeuEmsRUsoyG83frY5',
                 'is_active' => true,
             ]
@@ -75,6 +77,7 @@ class DatabaseSeeder extends Seeder
         $devActive1 = Device::updateOrCreate(
             ['device_code' => 'REV-DEMO01'],
             [
+                'activation_code' => 'ACT-111111',
                 'name' => 'Meja Kasir Utama',
                 'type' => 'qr_nfc',
                 'business_id' => $business1->id,
@@ -105,6 +108,7 @@ class DatabaseSeeder extends Seeder
         Device::updateOrCreate(
             ['device_code' => 'REV-DEMO02'],
             [
+                'activation_code' => 'ACT-222222',
                 'name' => 'Stand Meja Baru #1',
                 'type' => 'qr_nfc',
                 'business_id' => null,
@@ -112,7 +116,7 @@ class DatabaseSeeder extends Seeder
                 'total_scans' => 0,
                 'total_qr_scans' => 0,
                 'total_nfc_scans' => 0,
-                'notes' => 'Perangkat fisik baru dari admin, siap diaktivasi pemilik bisnis.',
+                'notes' => 'Perangkat fisik baru dari admin, siap diaktivasi pemilik bisnis dengan Kode Kartu ACT-222222.',
             ]
         );
 
@@ -120,6 +124,7 @@ class DatabaseSeeder extends Seeder
         Device::updateOrCreate(
             ['device_code' => 'REV-DEMO03'],
             [
+                'activation_code' => 'ACT-333333',
                 'name' => 'Stand Meja Cadangan',
                 'type' => 'qr_nfc',
                 'business_id' => $business1->id,
@@ -137,6 +142,7 @@ class DatabaseSeeder extends Seeder
         $devActive2 = Device::updateOrCreate(
             ['device_code' => 'REV-DEMO04'],
             [
+                'activation_code' => 'ACT-444444',
                 'name' => 'Sticker Meja VIP 01',
                 'type' => 'qr_nfc',
                 'business_id' => $business2->id,
@@ -166,6 +172,7 @@ class DatabaseSeeder extends Seeder
         Device::updateOrCreate(
             ['device_code' => 'REV-DEMO05'],
             [
+                'activation_code' => 'ACT-555555',
                 'name' => 'Kartu NFC Kasir Lama',
                 'type' => 'nfc_only',
                 'business_id' => $business1->id,
@@ -179,10 +186,13 @@ class DatabaseSeeder extends Seeder
         Device::updateOrCreate(
             ['device_code' => 'REV-DEMO06'],
             [
-                'name' => 'Stand Akrilik Pintu Keluar',
+                'activation_code' => 'ACT-666666',
+                'name' => 'Kartu NFC Cadangan #2',
                 'type' => 'qr_nfc',
                 'business_id' => null,
                 'status' => 'unactivated',
+                'total_scans' => 0,
+                'notes' => 'Perangkat baru belum diaktivasi dengan Kode Kartu ACT-666666.',
             ]
         );
 

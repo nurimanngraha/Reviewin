@@ -106,21 +106,38 @@ class DeviceWorkflowTest extends TestCase
     public function test_business_owner_can_activate_unactivated_device(): void
     {
         $owner = User::where('role', 'business_owner')->first();
+        $activationCode = 'ACT-998877';
+
         $device = Device::create([
             'device_code' => 'TEST-ACT-' . strtoupper(Str::random(6)),
+            'activation_code' => $activationCode,
             'name' => 'Meja Baru Belum Aktif',
             'type' => 'qr_nfc',
             'status' => 'unactivated',
         ]);
 
+        // Guest accessing unactivated device activation page gets redirected to login
+        $guestAccess = $this->get('/activate/' . $device->device_code);
+        $guestAccess->assertRedirect(route('login', ['redirect' => '/activate/' . $device->device_code]));
+
+        // Attempt activation with WRONG activation code -> should fail
+        $wrongCodeResponse = $this->actingAs($owner)->post('/activate/' . $device->device_code, [
+            'activation_code' => 'ACT-WRONG-CODE',
+            'business_name' => 'Kedai Kopi Mantap',
+            'google_place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
+        ]);
+        $wrongCodeResponse->assertSessionHasErrors('activation_code');
+        $device->refresh();
+        $this->assertEquals('unactivated', $device->status);
+
+        // Attempt activation with CORRECT activation code and Google Place ID
         $postData = [
-            'business_name' => 'Kopi Kenangan Senopati',
-            'business_id' => $owner->businesses()->first()?->id,
+            'activation_code' => $activationCode,
+            'business_name' => 'Kedai Kopi Mantap ' . Str::random(4),
+            'google_place_id' => 'ChIJN1t_tDeuEmsRUsoyG83frY4',
             'device_label' => 'Meja Kasir Tambahan',
-            'google_review_url' => 'https://maps.app.goo.gl/ReviewDemoTest',
         ];
 
-        // Authenticated activation request
         $response = $this->actingAs($owner)->post('/activate/' . $device->device_code, $postData);
 
         $response->assertRedirect(route('device.activated.success', ['code' => $device->device_code]));
@@ -129,11 +146,13 @@ class DeviceWorkflowTest extends TestCase
         $this->assertEquals('active', $device->status);
         $this->assertNotNull($device->business_id);
         $this->assertNotNull($device->activated_at);
+        $this->assertEquals('ChIJN1t_tDeuEmsRUsoyG83frY4', $device->business->google_place_id);
 
-        // Now subsequent customer scan goes straight to the review link without activation
+        // Subsequent customer scan goes straight to Google Review with Place ID without login
+        $expectedReviewUrl = 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4';
         $customerScan = $this->get('/r/' . $device->device_code);
         $customerScan->assertStatus(302);
-        $customerScan->assertRedirect('https://maps.app.goo.gl/ReviewDemoTest');
+        $customerScan->assertRedirect($expectedReviewUrl);
     }
 
     public function test_role_based_access_control(): void

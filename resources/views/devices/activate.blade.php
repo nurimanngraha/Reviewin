@@ -7,48 +7,68 @@
     <div class="max-w-xl mx-auto w-full">
         
         <!-- Header Brand -->
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold mb-4">
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-200 text-amber-900 text-xs font-semibold mb-3">
                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                 <span>Aktivasi Perangkat Baru (Scan Pertama)</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Setup Kartu / QR Code Google Review</h1>
-            <p class="mt-2 text-sm text-slate-600">
-                Hubungkan perangkat fisik ini ke bisnis Anda agar pelanggan dapat langsung memberikan ulasan bintang 5 di Google.
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Setup Kartu Google Review</h1>
+            <p class="mt-1.5 text-xs sm:text-sm text-slate-600">
+                Hubungkan perangkat fisik QR & NFC ini ke bisnis Anda menggunakan Kode Kartu dan Google Place ID.
             </p>
         </div>
 
-        <!-- Device Info Card -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-6 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center font-mono font-bold text-sm shadow">
-                    QR/NFC
+        <!-- Device Card Summary -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3.5">
+                    <div class="w-12 h-12 rounded-xl bg-slate-900 text-white flex flex-col items-center justify-center font-mono shadow">
+                        <i class="fas fa-qrcode text-base text-amber-400"></i>
+                        <span class="text-[9px] uppercase font-bold tracking-wider">NFC/QR</span>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider block">ID Perangkat</span>
+                        <span class="text-base sm:text-lg font-black text-slate-900 font-mono tracking-tight">{{ $device->device_code }}</span>
+                    </div>
                 </div>
-                <div>
-                    <span class="text-xs font-medium text-slate-500 block uppercase tracking-wider">Kode Unik Perangkat</span>
-                    <span class="text-lg font-extrabold text-slate-900 font-mono tracking-tight">{{ $device->device_code }}</span>
+                <div class="text-right">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                        <i class="fas fa-clock mr-1 text-[10px]"></i> Unactivated
+                    </span>
+                    <span class="block text-[11px] text-slate-400 mt-1 capitalize">{{ str_replace('_', ' ', $device->type) }}</span>
                 </div>
             </div>
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
-                Belum Aktif
-            </span>
+
+            <!-- Activation Code Badge from System -->
+            @if(!empty($device->activation_code))
+                <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between bg-slate-50 -mx-5 -mb-5 p-4 rounded-b-2xl">
+                    <div>
+                        <span class="text-[11px] font-semibold text-slate-500 block uppercase tracking-wider">Kode Kartu (Activation Code) Resmi</span>
+                        <span class="text-sm sm:text-base font-mono font-black text-brand-700 tracking-wider select-all">{{ $device->activation_code }}</span>
+                    </div>
+                    <span class="text-xs text-slate-500 bg-white border border-slate-200 px-3 py-1.5 rounded-lg font-medium shadow-xs">
+                        <i class="fas fa-key text-brand-600 mr-1"></i> Telah Disiapkan Admin
+                    </span>
+                </div>
+            @endif
         </div>
 
         @guest
             <!-- Authentication Required Gate -->
             <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-8 text-center">
                 <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-100 text-brand-600 flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <i class="fas fa-user-lock text-2xl"></i>
                 </div>
-                <h2 class="text-xl font-bold text-slate-900">Autentikasi Pemilik Bisnis</h2>
+                <h2 class="text-xl font-bold text-slate-900">Login Pemilik Bisnis Diperlukan</h2>
                 <p class="mt-2 text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-                    Untuk memastikan keamanan dan menghubungkan perangkat ini secara permanen ke akun bisnis Anda, silakan login terlebih dahulu.
+                    Untuk melanjutkan aktivasi dan mengaitkan perangkat fisik ini ke profil bisnis Anda, silakan masuk ke akun Anda terlebih dahulu.
                 </p>
 
                 <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                     <a href="{{ route('login', ['redirect' => '/activate/' . $device->device_code]) }}" 
-                       class="inline-flex justify-center items-center px-6 py-3 rounded-xl font-semibold text-white bg-brand-600 hover:bg-brand-700 shadow-md shadow-brand-500/20 text-sm transition-all">
-                        Masuk ke Akun Saya
+                       class="inline-flex justify-center items-center px-6 py-3 rounded-xl font-semibold text-white bg-brand-600 hover:bg-brand-700 shadow-md shadow-brand-500/20 text-sm transition-all gap-2">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Masuk ke Akun Pemilik Bisnis</span>
                     </a>
                     <a href="{{ route('register', ['redirect' => '/activate/' . $device->device_code]) }}" 
                        class="inline-flex justify-center items-center px-6 py-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-sm transition-colors">
@@ -61,54 +81,87 @@
             <div x-data="{ 
                     useExisting: {{ $userBusinesses->count() > 0 ? 'true' : 'false' }},
                     selectedBusinessId: '{{ $userBusinesses->first()?->id ?? '' }}',
-                    reviewUrl: '{{ $userBusinesses->first()?->google_review_url ?? '' }}',
+                    activationCode: '{{ old('activation_code', $device->activation_code ?? '') }}',
+                    placeId: '{{ old('google_place_id', $userBusinesses->first()?->google_place_id ?? '') }}',
+                    businessName: '{{ old('business_name', '') }}',
                     businesses: {{ Js::from($userBusinesses) }},
-                    updateReviewUrl() {
+                    updateBusiness() {
                         const b = this.businesses.find(item => item.id == this.selectedBusinessId);
-                        if (b && b.google_review_url) {
-                            this.reviewUrl = b.google_review_url;
+                        if (b) {
+                            this.placeId = b.google_place_id || '';
                         }
+                    },
+                    get previewUrl() {
+                        if (!this.placeId || this.placeId.trim() === '') return '';
+                        return 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(this.placeId.trim());
                     }
                  }" 
                  class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 sm:p-8">
                 
                 <div class="flex items-center gap-3 pb-5 mb-5 border-b border-slate-100">
-                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                    <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
                     <div>
-                        <p class="text-xs text-slate-500 font-medium">Login sebagai Pemilik Bisnis:</p>
-                        <p class="text-sm font-bold text-slate-900">{{ auth()->user()->name }} ({{ auth()->user()->email }})</p>
+                        <p class="text-xs text-slate-400 font-medium">Masuk sebagai:</p>
+                        <p class="text-sm font-bold text-slate-900">{{ auth()->user()->name }} <span class="text-slate-400 font-normal">({{ auth()->user()->email }})</span></p>
                     </div>
                 </div>
 
                 <form action="{{ route('device.activate.process', $device->device_code) }}" method="POST" class="space-y-5">
                     @csrf
 
+                    <!-- 1. Activation Code (Kode Kartu) -->
+                    <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-4">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="activation_code" class="block text-xs font-bold text-amber-950 uppercase tracking-wider">
+                                <i class="fas fa-shield-alt text-amber-600 mr-1"></i> Kode Kartu (Activation Code) <span class="text-rose-500">*</span>
+                            </label>
+                            @if(!empty($device->activation_code))
+                                <button type="button" 
+                                        @click="activationCode = '{{ $device->activation_code }}'"
+                                        class="text-[11px] text-brand-600 hover:text-brand-800 font-semibold underline">
+                                    Pakai Kode: {{ $device->activation_code }}
+                                </button>
+                            @endif
+                        </div>
+                        <input type="text" id="activation_code" name="activation_code" x-model="activationCode" required
+                               placeholder="Contoh: ACT-123456"
+                               class="w-full rounded-xl border-amber-300 bg-white shadow-xs focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono font-bold tracking-wider uppercase text-slate-900 @error('activation_code') border-rose-500 ring-rose-500 @enderror">
+                        @error('activation_code')
+                            <p class="text-xs text-rose-600 font-medium mt-1.5 flex items-center gap-1">
+                                <i class="fas fa-exclamation-circle"></i> {{ $message }}
+                            </p>
+                        @enderror
+                        <p class="text-[11px] text-slate-500 mt-1.5">
+                            Masukkan atau konfirmasi Kode Kartu unik yang tertera pada kartu/perangkat fisik atau yang disediakan sistem di atas.
+                        </p>
+                    </div>
+
+                    <!-- 2. Nama Bisnis -->
                     @if($userBusinesses->count() > 0)
-                        <!-- Toggle existing vs new business -->
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Pilih Bisnis</label>
+                            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">Pilih Bisnis untuk Perangkat Ini</label>
                             <div class="grid grid-cols-2 gap-3 mb-4">
                                 <button type="button" 
-                                        @click="useExisting = true"
-                                        :class="useExisting ? 'border-brand-600 bg-brand-50/50 text-brand-700 font-semibold' : 'border-slate-200 text-slate-600 hover:bg-slate-50'"
+                                        @click="useExisting = true; updateBusiness();"
+                                        :class="useExisting ? 'border-brand-600 bg-brand-50/50 text-brand-700 font-bold' : 'border-slate-200 text-slate-600 hover:bg-slate-50 font-medium'"
                                         class="p-3 text-xs rounded-xl border text-center transition-all">
-                                    Bisnis Terdaftar ({{ $userBusinesses->count() }})
+                                    Bisnis Saya ({{ $userBusinesses->count() }})
                                 </button>
                                 <button type="button" 
-                                        @click="useExisting = false; reviewUrl = '';"
-                                        :class="!useExisting ? 'border-brand-600 bg-brand-50/50 text-brand-700 font-semibold' : 'border-slate-200 text-slate-600 hover:bg-slate-50'"
+                                        @click="useExisting = false; placeId = ''; businessName = '';"
+                                        :class="!useExisting ? 'border-brand-600 bg-brand-50/50 text-brand-700 font-bold' : 'border-slate-200 text-slate-600 hover:bg-slate-50 font-medium'"
                                         class="p-3 text-xs rounded-xl border text-center transition-all">
-                                    + Tambah Bisnis Baru
+                                    + Daftarkan Bisnis Baru
                                 </button>
                             </div>
 
                             <div x-show="useExisting" class="space-y-4">
                                 <div>
-                                    <label for="business_id" class="block text-xs font-semibold text-slate-700 mb-1">Pilih Bisnis Anda</label>
-                                    <select id="business_id" name="business_id" x-model="selectedBusinessId" @change="updateReviewUrl()"
-                                            class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm">
+                                    <label for="business_id" class="block text-xs font-semibold text-slate-700 mb-1">Bisnis Terdaftar</label>
+                                    <select id="business_id" name="business_id" x-model="selectedBusinessId" @change="updateBusiness()"
+                                            class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5">
                                         @foreach($userBusinesses as $biz)
                                             <option value="{{ $biz->id }}">{{ $biz->name }} ({{ $biz->category ?? 'Bisnis' }})</option>
                                         @endforeach
@@ -119,12 +172,12 @@
                     @endif
 
                     <!-- New Business Fields -->
-                    <div x-show="!useExisting" class="space-y-4 pt-2">
+                    <div x-show="!useExisting" class="space-y-4 pt-1">
                         <div>
-                            <label for="business_name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Bisnis / Toko / Resto <span class="text-rose-500">*</span></label>
-                            <input type="text" id="business_name" name="business_name" value="{{ old('business_name') }}"
+                            <label for="business_name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Bisnis <span class="text-rose-500">*</span></label>
+                            <input type="text" id="business_name" name="business_name" x-model="businessName"
                                    placeholder="Contoh: Kopi Kenangan Senopati"
-                                   class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5">
+                                   class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 @error('business_name') border-rose-500 @enderror">
                             @error('business_name')
                                 <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                             @enderror
@@ -132,57 +185,70 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label for="category" class="block text-xs font-semibold text-slate-700 mb-1">Kategori</label>
+                                <label for="category" class="block text-xs font-semibold text-slate-700 mb-1">Kategori (Opsional)</label>
                                 <input type="text" id="category" name="category" value="{{ old('category') }}"
-                                       placeholder="Contoh: Cafe & Resto"
+                                       placeholder="Contoh: Coffee Shop & Bakery"
                                        class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5">
                             </div>
                             <div>
-                                <label for="phone" class="block text-xs font-semibold text-slate-700 mb-1">No. Kontak / WhatsApp</label>
+                                <label for="phone" class="block text-xs font-semibold text-slate-700 mb-1">No. Kontak (Opsional)</label>
                                 <input type="text" id="phone" name="phone" value="{{ old('phone', auth()->user()->phone) }}"
                                        placeholder="08123456789"
                                        class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5">
                             </div>
                         </div>
-
-                        <div>
-                            <label for="address" class="block text-xs font-semibold text-slate-700 mb-1">Alamat Bisnis</label>
-                            <textarea id="address" name="address" rows="2"
-                                      placeholder="Alamat lengkap lokasi bisnis..."
-                                      class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2 px-3">{{ old('address') }}</textarea>
-                        </div>
                     </div>
 
-                    <!-- Label Device -->
-                    <div class="pt-2">
-                        <label for="device_label" class="block text-xs font-semibold text-slate-700 mb-1">Label Lokasi Perangkat (Opsional)</label>
-                        <input type="text" id="device_label" name="device_label" value="{{ old('device_label', $device->name) }}"
-                               placeholder="Contoh: Meja Kasir Utama, Meja 12, Pintu Keluar"
-                               class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5">
-                        <p class="text-[11px] text-slate-500 mt-1">Membantu Anda membedakan lokasi penempatan kartu/stand QR ini.</p>
-                    </div>
-
-                    <!-- Google Review URL -->
+                    <!-- 3. Google Place ID -->
                     <div class="pt-2">
                         <div class="flex items-center justify-between mb-1">
-                            <label for="google_review_url" class="block text-xs font-semibold text-slate-700">Link Google Review <span class="text-rose-500">*</span></label>
-                            <span class="text-[11px] text-brand-600 font-medium cursor-pointer" onclick="window.open('https://support.google.com/business/answer/3474122', '_blank')">Cara dapat link Google Review?</span>
+                            <label for="google_place_id" class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                                <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID <span class="text-rose-500">*</span>
+                            </label>
+                            <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" 
+                               target="_blank" 
+                               class="text-[11px] text-brand-600 hover:text-brand-800 font-semibold inline-flex items-center gap-1">
+                                <span>Cari Place ID</span>
+                                <i class="fas fa-external-link-alt text-[9px]"></i>
+                            </a>
                         </div>
-                        <input type="url" id="google_review_url" name="google_review_url" x-model="reviewUrl" required
-                               placeholder="https://g.page/r/xxxxxx/review atau https://maps.app.goo.gl/xxxxxx"
-                               class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono text-xs @error('google_review_url') border-rose-500 @enderror">
-                        @error('google_review_url')
+                        <input type="text" id="google_place_id" name="google_place_id" x-model="placeId" required
+                               placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4"
+                               class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono text-xs text-slate-900 @error('google_place_id') border-rose-500 @enderror">
+                        @error('google_place_id')
                             <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                         @enderror
-                        <p class="text-[11px] text-slate-500 mt-1">Setelah perangkat aktif, setiap scan QR atau tap NFC pelanggan akan langsung diarahkan ke link ini.</p>
+
+                        <!-- Live URL Preview -->
+                        <div x-show="previewUrl" class="mt-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase tracking-wider mb-1">Preview Link Google Review Otomatis:</span>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] text-emerald-700 truncate block flex-1" x-text="previewUrl"></span>
+                                <a :href="previewUrl" target="_blank" class="text-xs text-brand-600 hover:text-brand-800 font-semibold whitespace-nowrap">
+                                    Test Link <i class="fas fa-external-link-alt text-[10px]"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <p class="text-[11px] text-slate-500 mt-1.5">
+                            Google Place ID digunakan sistem untuk langsung mengarahkan setiap scan atau tap pelanggan ke pop-up bintang review 5 Google bisnis Anda.
+                        </p>
+                    </div>
+
+                    <!-- 4. Label Penempatan Perangkat (Opsional) -->
+                    <div class="pt-1">
+                        <label for="device_label" class="block text-xs font-semibold text-slate-700 mb-1">Label Penempatan Kartu (Opsional)</label>
+                        <input type="text" id="device_label" name="device_label" value="{{ old('device_label', $device->name) }}"
+                               placeholder="Contoh: Meja Kasir Utama, Meja 12, Pintu Keluar"
+                               class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2 px-3.5">
                     </div>
 
                     <!-- Submit Button -->
                     <div class="pt-4">
                         <button type="submit" 
                                 class="w-full py-3.5 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg shadow-emerald-600/30 transition-all text-sm flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                            <span>Aktivasi Perangkat Sekarang</span>
+                            <i class="fas fa-check-circle text-base"></i>
+                            <span>Aktivasi & Hubungkan Perangkat</span>
                         </button>
                     </div>
                 </form>

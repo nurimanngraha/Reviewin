@@ -36,6 +36,12 @@
                 <span class="text-slate-500 font-medium">Waktu Aktivasi:</span>
                 <span class="font-semibold text-slate-700">{{ $device->activated_at?->translatedFormat('d F Y, H:i') ?? now()->translatedFormat('d F Y, H:i') }}</span>
             </div>
+            @if(!empty($device->business?->google_place_id))
+            <div class="flex justify-between items-center text-xs pb-3 border-b border-slate-100">
+                <span class="text-slate-500 font-medium">Google Place ID:</span>
+                <span class="font-mono font-bold text-slate-800">{{ $device->business->google_place_id }}</span>
+            </div>
+            @endif
             <div class="text-xs pt-1">
                 <span class="text-slate-500 font-medium block mb-1">Target Link Google Review:</span>
                 <p class="font-mono text-[11px] text-slate-800 bg-slate-50 p-2.5 rounded-lg border border-slate-200 break-all">

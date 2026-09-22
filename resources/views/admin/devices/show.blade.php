@@ -71,6 +71,29 @@
                 </div>
             </div>
 
+            <!-- Activation Code Card for Physical Packaging -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-xs">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                        <i class="fas fa-key text-amber-600"></i> Kode Kartu (Activation Code)
+                    </span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-200/70 text-amber-900">Verifikasi Fisik</span>
+                </div>
+                <p class="text-xs text-amber-800 leading-relaxed mb-3">
+                    Kode ini dimasukkan oleh Pemilik Bisnis saat aktivasi kartu. Cetak kode ini pada kemasan perangkat.
+                </p>
+                <div class="flex items-center gap-2 bg-white border border-amber-300 rounded-xl p-2.5">
+                    <span class="font-mono font-black text-lg text-slate-900 tracking-wider flex-1 text-center select-all">
+                        {{ $device->activation_code ?? 'BELUM DIATUR' }}
+                    </span>
+                    <button type="button" 
+                            onclick="navigator.clipboard.writeText('{{ $device->activation_code }}'); alert('Kode Kartu disalin!');"
+                            class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-bold transition-colors">
+                        Salin
+                    </button>
+                </div>
+            </div>
+
             <!-- NFC Configuration Box -->
             <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
                 <div class="flex items-center justify-between">
