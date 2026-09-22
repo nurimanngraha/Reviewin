@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@php
+    // =========================================================================
+    // PENGATURAN UKURAN LOGO NAVBAR (PERSENTASE)
+    // -------------------------------------------------------------------------
+    // Ubah persentase di bawah ini untuk mengatur ukuran logo di sidebar:
+    // Contoh: '70%', '80%', '85%', '90%', '95%', '100%'
+    // =========================================================================
+    $navbarLogoWidth = '85%';
+@endphp
+
 @section('body')
 <div x-data="{ sidebarOpen: false }" class="h-screen bg-slate-100 flex overflow-hidden">
 
@@ -19,11 +29,14 @@
            class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-200 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-y-0 shrink-0 flex flex-col shadow-2xl h-screen">
         
         <!-- Brand Logo -->
-        <div class="h-16 flex items-center justify-between px-4 border-b border-slate-800 bg-slate-950">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center group overflow-hidden">
-                <img src="{{ asset('assets/CreTechNavbarAdmin.svg') }}" alt="CreTech Admin" class="h-14 w-auto object-contain max-w-[190px] group-hover:scale-105 transition-transform">
+        <div class="min-h-[4.75rem] py-3 px-4 flex items-center justify-between border-b border-slate-800 bg-slate-950">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center group flex-1">
+                <img src="{{ asset('assets/CreTechNavbarAdmin.svg') }}" 
+                     alt="CreTech Admin" 
+                     style="width: {{ $navbarLogoWidth }}; max-width: 100%; height: auto;" 
+                     class="object-contain transition-transform duration-200 group-hover:scale-105">
             </a>
-            <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white">
+            <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white shrink-0 ml-2">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>

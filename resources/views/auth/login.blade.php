@@ -2,6 +2,12 @@
 
 @section('title', 'Masuk ke Akun - CreTech')
 
+@php
+    // Pengaturan ukuran logo (persentase)
+    // Ubah nilai di bawah jika ingin memperbesar/memperkecil (misal: '50%', '65%', '75%')
+    $loginLogoWidth = '65%';
+@endphp
+
 @section('body')
 <div class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
     <!-- Subtle Background Glows -->
@@ -11,7 +17,7 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md relative z-10 px-4">
         <div class="text-center mb-8">
             <a href="{{ route('home') }}" class="inline-block group hover:scale-105 transition-transform">
-                <img src="{{ asset('assets/CreTechlogin.svg') }}" alt="CreTech" class="h-14 sm:h-16 w-auto mx-auto object-contain drop-shadow-md">
+                <img src="{{ asset('assets/CreTechlogin.svg') }}" alt="CreTech" style="width: {{ $loginLogoWidth }}; max-width: 280px; height: auto;" class="mx-auto object-contain drop-shadow-md">
             </a>
             <h2 class="mt-4 text-2xl font-bold tracking-tight text-white">Masuk ke Akun Anda</h2>
             <p class="mt-1 text-sm text-slate-400">
