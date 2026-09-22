@@ -205,9 +205,10 @@
                             <label for="google_place_id" class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
                                 <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID <span class="text-rose-500">*</span>
                             </label>
-                            <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" 
+                            <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" 
                                target="_blank" 
-                               class="text-[11px] text-brand-600 hover:text-brand-800 font-semibold inline-flex items-center gap-1">
+                               class="text-[11px] text-brand-600 hover:text-brand-800 font-bold inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-50 border border-brand-200 transition-colors shadow-2xs">
+                                <i class="fas fa-map-marker-alt text-brand-600 text-[10px]"></i>
                                 <span>Cari Place ID</span>
                                 <i class="fas fa-external-link-alt text-[9px]"></i>
                             </a>
@@ -219,20 +220,30 @@
                             <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                         @enderror
 
+                        <!-- Brief Step-by-Step Guide on How to Get Google Place ID -->
+                        <div class="mt-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600">
+                            <div class="flex items-center gap-1.5 text-slate-800 font-bold text-[11px] uppercase tracking-wider mb-1.5">
+                                <i class="fas fa-info-circle text-brand-600"></i>
+                                <span>Cara Singkat Mendapatkan Google Place ID:</span>
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1 text-[11px] leading-relaxed text-slate-600 pl-0.5">
+                                <li>Klik tombol <strong class="text-brand-700">"Cari Place ID"</strong> di atas atau buka <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="text-brand-600 underline font-semibold">Google Place ID Finder</a>.</li>
+                                <li>Ketik nama toko atau alamat cabang bisnis Anda pada kolom pencarian di peta.</li>
+                                <li>Pilih bisnis Anda dari rekomendasi yang tampil.</li>
+                                <li>Salin kode <strong>Place ID</strong> (berawalan <code class="font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-slate-300 text-slate-900">ChIJ...</code>) lalu tempel ke kolom di atas.</li>
+                            </ol>
+                        </div>
+
                         <!-- Live URL Preview -->
-                        <div x-show="previewUrl" class="mt-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                            <span class="text-[10px] font-bold text-slate-400 block uppercase tracking-wider mb-1">Preview Link Google Review Otomatis:</span>
+                        <div x-show="previewUrl" class="mt-2.5 p-3 rounded-xl bg-emerald-50/70 border border-emerald-200">
+                            <span class="text-[10px] font-bold text-emerald-900 block uppercase tracking-wider mb-1">Preview Link Google Review Otomatis:</span>
                             <div class="flex items-center gap-2">
                                 <span class="font-mono text-[11px] text-emerald-700 truncate block flex-1" x-text="previewUrl"></span>
-                                <a :href="previewUrl" target="_blank" class="text-xs text-brand-600 hover:text-brand-800 font-semibold whitespace-nowrap">
+                                <a :href="previewUrl" target="_blank" class="text-xs text-brand-600 hover:text-brand-800 font-bold whitespace-nowrap">
                                     Test Link <i class="fas fa-external-link-alt text-[10px]"></i>
                                 </a>
                             </div>
                         </div>
-
-                        <p class="text-[11px] text-slate-500 mt-1.5">
-                            Google Place ID digunakan sistem untuk langsung mengarahkan setiap scan atau tap pelanggan ke pop-up bintang review 5 Google bisnis Anda.
-                        </p>
                     </div>
 
                     <!-- 4. Label Penempatan Perangkat (Opsional) -->

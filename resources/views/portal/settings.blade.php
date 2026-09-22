@@ -42,24 +42,54 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Google Review URL (Main Focus) -->
-                <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200">
-                    <div class="flex items-center justify-between mb-1.5">
-                        <label for="google_review_url" class="block text-xs font-bold text-emerald-950 uppercase tracking-wider">
-                            Link Google Review (Bintang 5) <span class="text-rose-500">*</span>
-                        </label>
-                        <span class="text-[11px] text-emerald-700 font-semibold cursor-pointer underline" onclick="window.open('https://support.google.com/business/answer/3474122', '_blank')">
-                            Petunjuk Google Profile
-                        </span>
+                <!-- Google Place ID & Review Link -->
+                <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200 space-y-4"
+                     x-data="{
+                         placeId: '{{ old('google_place_id', $selectedBusiness->google_place_id) }}',
+                         reviewUrl: '{{ old('google_review_url', $selectedBusiness->google_review_url) }}',
+                         generateUrl() {
+                             if (this.placeId && this.placeId.trim() !== '') {
+                                 this.reviewUrl = 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(this.placeId.trim());
+                             }
+                         }
+                     }">
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="google_place_id" class="block text-xs font-bold text-emerald-950 uppercase tracking-wider">
+                                <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID
+                            </label>
+                            <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" 
+                               target="_blank" 
+                               class="text-[11px] text-emerald-700 hover:text-emerald-900 font-bold inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-emerald-300 shadow-2xs">
+                                <i class="fas fa-map-marker-alt text-emerald-600 text-[10px]"></i>
+                                <span>Cari Place ID</span>
+                                <i class="fas fa-external-link-alt text-[9px]"></i>
+                            </a>
+                        </div>
+                        <input type="text" id="google_place_id" name="google_place_id" x-model="placeId" @input="generateUrl()"
+                               value="{{ old('google_place_id', $selectedBusiness->google_place_id) }}"
+                               placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4"
+                               class="w-full rounded-xl border-emerald-300 font-mono text-xs py-2.5 px-3.5 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm bg-white">
+                        <p class="text-[11px] text-emerald-800/80 mt-1.5">
+                            Mengisi Google Place ID akan secara otomatis membentuk link Google Review langsung ke form bintang 5 pelanggan.
+                        </p>
                     </div>
-                    <input type="url" id="google_review_url" name="google_review_url" value="{{ old('google_review_url', $selectedBusiness->google_review_url) }}" required
-                           class="w-full rounded-xl border-emerald-300 font-mono text-xs py-2.5 px-3.5 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm">
-                    @error('google_review_url')
-                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                    @enderror
-                    <p class="text-[11px] text-emerald-800/80 mt-2 leading-relaxed">
-                        Tip: Dapatkan link ini dari Google Bisnisku (Google Business Profile) &gt; tombol <strong>"Minta ulasan"</strong> atau <strong>"Ask for reviews"</strong>. Format biasanya <code>https://g.page/r/.../review</code> atau link pendek Google Maps.
-                    </p>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label for="google_review_url" class="block text-xs font-bold text-emerald-950 uppercase tracking-wider">
+                                Link Google Review <span class="text-rose-500">*</span>
+                            </label>
+                            <span class="text-[11px] text-emerald-700 font-semibold cursor-pointer underline" onclick="window.open('https://support.google.com/business/answer/3474122', '_blank')">
+                                Petunjuk Google Profile
+                            </span>
+                        </div>
+                        <input type="url" id="google_review_url" name="google_review_url" x-model="reviewUrl" required
+                               class="w-full rounded-xl border-emerald-300 font-mono text-xs py-2.5 px-3.5 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm bg-white">
+                        @error('google_review_url')
+                            <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
                 <!-- Business Name & Category -->
