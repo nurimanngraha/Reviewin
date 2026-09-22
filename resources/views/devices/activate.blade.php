@@ -127,7 +127,7 @@
                         </div>
                         <input type="text" id="activation_code" name="activation_code" x-model="activationCode" required
                                placeholder="Contoh: ACT-123456"
-                               class="w-full rounded-xl border-amber-300 bg-white shadow-xs focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono font-bold tracking-wider uppercase text-slate-900 @error('activation_code') border-rose-500 ring-rose-500 @enderror">
+                               class="w-full rounded-xl bg-white shadow-xs focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono font-bold tracking-wider uppercase text-slate-900 {{ $errors->has('activation_code') ? 'border-rose-500 focus:border-rose-500 ring-rose-500' : 'border-amber-300 focus:border-brand-500' }}">
                         @error('activation_code')
                             <p class="text-xs text-rose-600 font-medium mt-1.5 flex items-center gap-1">
                                 <i class="fas fa-exclamation-circle"></i> {{ $message }}
@@ -177,7 +177,7 @@
                             <label for="business_name" class="block text-xs font-semibold text-slate-700 mb-1">Nama Bisnis <span class="text-rose-500">*</span></label>
                             <input type="text" id="business_name" name="business_name" x-model="businessName"
                                    placeholder="Contoh: Kopi Kenangan Senopati"
-                                   class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 @error('business_name') border-rose-500 @enderror">
+                                   class="w-full rounded-xl shadow-sm focus:ring-brand-500 text-sm py-2.5 px-3.5 {{ $errors->has('business_name') ? 'border-rose-500 focus:border-rose-500' : 'border-slate-300 focus:border-brand-500' }}">
                             @error('business_name')
                                 <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                             @enderror
@@ -215,7 +215,7 @@
                         </div>
                         <input type="text" id="google_place_id" name="google_place_id" x-model="placeId" required
                                placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4"
-                               class="w-full rounded-xl border-slate-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm py-2.5 px-3.5 font-mono text-xs text-slate-900 @error('google_place_id') border-rose-500 @enderror">
+                               class="w-full rounded-xl shadow-sm focus:ring-brand-500 py-2.5 px-3.5 font-mono text-xs text-slate-900 {{ $errors->has('google_place_id') ? 'border-rose-500 focus:border-rose-500' : 'border-slate-300 focus:border-brand-500' }}">
                         @error('google_place_id')
                             <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                         @enderror

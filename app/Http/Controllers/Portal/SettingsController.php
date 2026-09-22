@@ -17,6 +17,7 @@ class SettingsController extends Controller
      */
     public function index(Request $request): View
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $businesses = $user->businesses()->get();
 
@@ -69,6 +70,7 @@ class SettingsController extends Controller
             'address' => ['nullable', 'string', 'max:500'],
             'phone' => ['nullable', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:255'],
+            'google_place_id' => ['nullable', 'string', 'max:255'],
             'google_review_url' => ['required', 'url', 'max:1000'],
         ], [
             'name.required' => 'Nama bisnis wajib diisi.',
@@ -89,6 +91,7 @@ class SettingsController extends Controller
             'address' => $validated['address'] ?? null,
             'phone' => $validated['phone'] ?? null,
             'email' => $validated['email'] ?? null,
+            'google_place_id' => $validated['google_place_id'] ?? null,
             'google_review_url' => $validated['google_review_url'],
             'is_active' => true,
         ]);

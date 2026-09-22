@@ -21,13 +21,24 @@
             @csrf
             @method('PUT')
 
-            <div>
-                <label for="name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nama / Label Lokasi <span class="text-rose-500">*</span></label>
-                <input type="text" id="name" name="name" value="{{ old('name', $device->name) }}" required
-                       class="w-full rounded-xl border-slate-300 text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
-                @error('name')
-                    <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                @enderror
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nama / Label Lokasi <span class="text-rose-500">*</span></label>
+                    <input type="text" id="name" name="name" value="{{ old('name', $device->name) }}" required
+                           class="w-full rounded-xl border-slate-300 text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
+                    @error('name')
+                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="activation_code" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Kode Kartu (Activation Code)</label>
+                    <input type="text" id="activation_code" name="activation_code" value="{{ old('activation_code', $device->activation_code) }}"
+                           placeholder="ACT-XXXXXX"
+                           class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
+                    @error('activation_code')
+                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

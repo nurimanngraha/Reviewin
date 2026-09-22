@@ -18,6 +18,7 @@ class AnalyticsController extends Controller
      */
     public function index(Request $request): View
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $businessIds = $user->businesses()->pluck('id');
         $devices = Device::whereIn('business_id', $businessIds)->orderBy('name')->get();

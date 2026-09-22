@@ -98,8 +98,14 @@
                             <!-- Device Code & Label -->
                             <td class="py-3.5 px-4">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-mono font-bold text-xs flex-shrink-0">
-                                        QR
+                                    <div class="w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-mono font-bold text-xs shrink-0">
+                                        @if($device->type === 'nfc')
+                                            NFC
+                                        @elseif($device->type === 'qr_nfc')
+                                            <span class="text-[9px]">QR+NFC</span>
+                                        @else
+                                            QR
+                                        @endif
                                     </div>
                                     <div>
                                         <a href="{{ route('admin.devices.show', $device) }}" class="font-mono font-bold text-slate-900 hover:text-brand-600 block text-xs">

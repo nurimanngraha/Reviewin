@@ -50,9 +50,13 @@
                     <a href="{{ route('admin.devices.show', $device) }}" class="py-2.5 px-4 rounded-xl font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 text-sm transition-colors">
                         Kembali ke Detail Device Admin
                     </a>
-                @else
+                @elseif($device->business && $device->business->user_id === auth()->id())
                     <a href="{{ route('portal.devices.show', $device) }}" class="py-2.5 px-4 rounded-xl font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 text-sm transition-colors">
                         Buka di Portal Pemilik Bisnis
+                    </a>
+                @else
+                    <a href="{{ route('portal.dashboard') }}" class="py-2.5 px-4 rounded-xl font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 text-sm transition-colors">
+                        Kembali ke Dashboard Portal
                     </a>
                 @endif
             @else

@@ -19,6 +19,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request): View
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $businesses = $user->businesses()->with('devices')->get();
         $businessIds = $businesses->pluck('id');

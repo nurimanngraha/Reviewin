@@ -30,7 +30,12 @@
                         <div>
                             <span class="font-mono text-sm font-extrabold text-slate-900 block tracking-tight">{{ $device->device_code }}</span>
                             <h3 class="text-base font-bold text-slate-800 mt-0.5">{{ $device->name }}</h3>
-                            <span class="text-[11px] text-slate-500">{{ $device->business?->name }}</span>
+                            <span class="text-[11px] text-slate-500 block">{{ $device->business?->name }}</span>
+                            @if(!empty($device->activation_code))
+                                <span class="inline-flex items-center gap-1 font-mono text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 mt-1" title="Kode Kartu (Activation Code) Fisik">
+                                    <i class="fas fa-key text-[9px] text-amber-600"></i> Kode: {{ $device->activation_code }}
+                                </span>
+                            @endif
                         </div>
                         <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase
                               {{ $device->status === 'active' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-700' }}">

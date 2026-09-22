@@ -73,6 +73,20 @@
                         <p class="text-[11px] text-emerald-800/80 mt-1.5">
                             Mengisi Google Place ID akan secara otomatis membentuk link Google Review langsung ke form bintang 5 pelanggan.
                         </p>
+
+                        <!-- Brief Step-by-Step Guide on How to Get Google Place ID -->
+                        <div class="mt-2.5 p-3 rounded-xl bg-white/90 border border-emerald-200 text-xs text-slate-600">
+                            <div class="flex items-center gap-1.5 text-slate-800 font-bold text-[11px] uppercase tracking-wider mb-1.5">
+                                <i class="fas fa-info-circle text-emerald-600"></i>
+                                <span>Cara Singkat Mendapatkan Google Place ID:</span>
+                            </div>
+                            <ol class="list-decimal list-inside space-y-1 text-[11px] leading-relaxed text-slate-600 pl-0.5">
+                                <li>Klik tombol <strong class="text-emerald-700">"Cari Place ID"</strong> di atas atau buka <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" target="_blank" class="text-emerald-600 underline font-semibold">Google Place ID Finder</a>.</li>
+                                <li>Ketik nama toko atau alamat cabang bisnis Anda pada kolom pencarian di peta.</li>
+                                <li>Pilih bisnis Anda dari rekomendasi yang tampil.</li>
+                                <li>Salin kode <strong>Place ID</strong> (berawalan <code class="font-mono font-bold bg-slate-100 px-1.5 py-0.5 rounded border border-slate-300 text-slate-900">ChIJ...</code>) lalu tempel ke kolom di atas.</li>
+                            </ol>
+                        </div>
                     </div>
 
                     <div>
@@ -146,15 +160,42 @@
             <h3 class="text-base font-bold text-slate-900 mb-1">Tambah Cabang / Bisnis Baru</h3>
             <p class="text-xs text-slate-500 mb-4">Daftarkan cabang toko baru untuk dihubungkan dengan perangkat fisik lainnya.</p>
 
-            <form action="{{ route('portal.settings.business.store') }}" method="POST" class="space-y-4">
+            <form action="{{ route('portal.settings.business.store') }}" method="POST" class="space-y-4"
+                  x-data="{
+                      branchPlaceId: '',
+                      branchReviewUrl: '',
+                      generateBranchUrl() {
+                          if (this.branchPlaceId && this.branchPlaceId.trim() !== '') {
+                              this.branchReviewUrl = 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(this.branchPlaceId.trim());
+                          }
+                      }
+                  }">
                 @csrf
                 <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nama Bisnis <span class="text-rose-500">*</span></label>
                     <input type="text" name="name" required placeholder="Contoh: Kopi Kenangan Cabang Kemang" class="w-full rounded-xl border-slate-300 text-sm py-2 px-3">
                 </div>
                 <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                            <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID
+                        </label>
+                        <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" 
+                           target="_blank" 
+                           class="text-[10px] text-emerald-700 hover:text-emerald-900 font-bold inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 border border-emerald-300">
+                            <span>Cari Place ID</span>
+                            <i class="fas fa-external-link-alt text-[8px]"></i>
+                        </a>
+                    </div>
+                    <input type="text" name="google_place_id" x-model="branchPlaceId" @input="generateBranchUrl()"
+                           placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4" 
+                           class="w-full rounded-xl border-slate-300 font-mono text-xs py-2 px-3">
+                </div>
+                <div>
                     <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Link Google Review <span class="text-rose-500">*</span></label>
-                    <input type="url" name="google_review_url" required placeholder="https://g.page/r/..." class="w-full rounded-xl border-slate-300 text-xs font-mono py-2 px-3">
+                    <input type="url" name="google_review_url" x-model="branchReviewUrl" required 
+                           placeholder="https://search.google.com/local/writereview?placeid=..." 
+                           class="w-full rounded-xl border-slate-300 text-xs font-mono py-2 px-3">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>

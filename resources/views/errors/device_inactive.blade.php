@@ -54,6 +54,14 @@
                     <a href="{{ route('admin.devices.show', $device) }}" class="px-5 py-2.5 rounded-xl font-medium text-white bg-brand-600 hover:bg-brand-700 text-sm shadow">
                         Kelola di Admin
                     </a>
+                @elseif($device->business && $device->business->user_id === auth()->id())
+                    <a href="{{ route('portal.devices.show', $device) }}" class="px-5 py-2.5 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 text-sm shadow">
+                        Lihat di Portal
+                    </a>
+                @else
+                    <a href="{{ route('portal.dashboard') }}" class="px-5 py-2.5 rounded-xl font-medium text-white bg-emerald-600 hover:bg-emerald-700 text-sm shadow">
+                        Dashboard Portal
+                    </a>
                 @endif
             @else
                 <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl font-medium text-white bg-slate-900 hover:bg-slate-800 text-sm shadow">

@@ -4,7 +4,7 @@
 @section('page_title', 'Detail Perangkat: ' . $device->device_code)
 
 @section('content')
-<div class="space-y-6" x-data="{ resetModal: false, copiedNfc: false, copiedQr: false }">
+<div class="space-y-6" x-data="{ resetModal: false, copiedNfc: false, copiedQr: false, copiedAct: false }">
 
     <!-- Top Navigation Breadcrumbs -->
     <div class="flex items-center justify-between">
@@ -87,9 +87,9 @@
                         {{ $device->activation_code ?? 'BELUM DIATUR' }}
                     </span>
                     <button type="button" 
-                            onclick="navigator.clipboard.writeText('{{ $device->activation_code }}'); alert('Kode Kartu disalin!');"
+                            @click="navigator.clipboard.writeText('{{ $device->activation_code }}'); copiedAct = true; setTimeout(() => copiedAct = false, 2000)"
                             class="px-3 py-1.5 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-bold transition-colors">
-                        Salin
+                        <span x-text="copiedAct ? 'Tersalin!' : 'Salin'"></span>
                     </button>
                 </div>
             </div>

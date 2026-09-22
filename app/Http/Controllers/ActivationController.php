@@ -49,6 +49,7 @@ class ActivationController extends Controller
                 ->with('warning', 'Silakan masuk / login terlebih dahulu sebagai Pemilik Bisnis untuk mengaktifkan kartu QR & NFC ini.');
         }
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $userBusinesses = $user->businesses()->get();
 
@@ -80,6 +81,7 @@ class ActivationController extends Controller
                 ->with('warning', 'Sesi Anda telah berakhir. Silakan login kembali untuk menyelesaikan aktivasi.');
         }
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $rules = [

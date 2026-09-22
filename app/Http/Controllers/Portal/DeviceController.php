@@ -22,7 +22,9 @@ class DeviceController extends Controller
      */
     public function index(): View
     {
-        $businessIds = Auth::user()->businesses()->pluck('id');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $businessIds = $user->businesses()->pluck('id');
         $devices = Device::with('business')
             ->whereIn('business_id', $businessIds)
             ->latest()
@@ -95,7 +97,9 @@ class DeviceController extends Controller
      */
     protected function authorizeDevice(Device $device): void
     {
-        $businessIds = Auth::user()->businesses()->pluck('id')->toArray();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $businessIds = $user->businesses()->pluck('id')->toArray();
 
         if (!in_array($device->business_id, $businessIds)) {
             abort(403, 'Anda tidak memiliki akses ke perangkat ini.');

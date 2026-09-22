@@ -64,17 +64,50 @@
                           class="w-full rounded-xl border-slate-300 text-sm py-2 px-3 focus:border-brand-500 focus:ring-brand-500">{{ old('address') }}</textarea>
             </div>
 
-            <div>
-                <label for="google_review_url" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                    Link Google Review Bisnis <span class="text-rose-500">*</span>
-                </label>
-                <input type="url" id="google_review_url" name="google_review_url" value="{{ old('google_review_url') }}" required
-                       placeholder="https://g.page/r/xxxx/review atau https://maps.app.goo.gl/xxxx"
-                       class="w-full rounded-xl border-slate-300 font-mono text-xs py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
-                @error('google_review_url')
-                    <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                @enderror
-                <p class="text-[11px] text-slate-500 mt-1">Semua perangkat yang terhubung ke bisnis ini akan otomatis mengarah ke link ini.</p>
+            <!-- Google Place ID & Google Review Link with Live Generation -->
+            <div class="p-4 rounded-2xl bg-brand-50/50 border border-brand-200/80 space-y-3"
+                 x-data="{
+                     placeId: '{{ old('google_place_id') }}',
+                     reviewUrl: '{{ old('google_review_url') }}',
+                     generateUrl() {
+                         if (this.placeId && this.placeId.trim() !== '') {
+                             this.reviewUrl = 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(this.placeId.trim());
+                         }
+                     }
+                 }">
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label for="google_place_id" class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                            <i class="fab fa-google text-rose-500 mr-1"></i> Google Place ID
+                        </label>
+                        <a href="https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder" 
+                           target="_blank" 
+                           class="text-[11px] text-brand-600 hover:text-brand-800 font-bold inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-brand-300 shadow-2xs">
+                            <i class="fas fa-map-marker-alt text-brand-600 text-[10px]"></i>
+                            <span>Cari Place ID</span>
+                            <i class="fas fa-external-link-alt text-[9px]"></i>
+                        </a>
+                    </div>
+                    <input type="text" id="google_place_id" name="google_place_id" x-model="placeId" @input="generateUrl()"
+                           placeholder="Contoh: ChIJN1t_tDeuEmsRUsoyG83frY4"
+                           class="w-full rounded-xl border-slate-300 font-mono text-xs py-2 px-3 focus:border-brand-500 focus:ring-brand-500 bg-white">
+                    <p class="text-[11px] text-slate-500 mt-1">
+                        Ketik Google Place ID toko untuk otomatis membentuk Link Google Review.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="google_review_url" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">
+                        Link Google Review Bisnis <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="url" id="google_review_url" name="google_review_url" x-model="reviewUrl" required
+                           placeholder="https://search.google.com/local/writereview?placeid=..."
+                           class="w-full rounded-xl border-slate-300 font-mono text-xs py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500 bg-white">
+                    @error('google_review_url')
+                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                    @enderror
+                    <p class="text-[11px] text-slate-500 mt-1">Semua perangkat yang terhubung ke bisnis ini akan otomatis mengarah ke link ini.</p>
+                </div>
             </div>
 
             <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
