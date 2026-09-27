@@ -138,10 +138,13 @@ Begitu statusnya centang hijau (Success), aplikasi Anda sudah langsung live di *
 
 ---
 
-## 👤 Akun Login Default
-* **Administrator**:
-  * Email: `admin@reviewin.test`
-  * Password: `password`
-* **Pemilik Bisnis**:
-  * Email: `owner@reviewin.test`
-  * Password: `password`
+## 👤 Akun Login Administrator (Produksi)
+* **Email Utama**: `admin@cretech.com`
+* **Password Utama**: `admincretech2026`
+* **Email Cadangan**: `admin@reviewin.test`
+* **Password Cadangan**: `password`
+
+> **Catatan Reset Database:**
+> Untuk melakukan reset bersih database dan membuat akun admin di atas kapan saja, cukup buka:
+> `https://cretech.wuaze.com/system/migrate?key=fa66903742b9e12b&fresh=1`
+
