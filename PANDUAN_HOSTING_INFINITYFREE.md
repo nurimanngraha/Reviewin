@@ -148,3 +148,32 @@ Begitu statusnya centang hijau (Success), aplikasi Anda sudah langsung live di *
 > Untuk melakukan reset bersih database dan membuat akun admin di atas kapan saja, cukup buka:
 > `https://cretech.wuaze.com/system/migrate?key=fa66903742b9e12b&fresh=1`
 
+---
+
+## 🔐 Cara Reset Password Admin / Daftar Admin Baru (URL Rahasia)
+
+Sesuai standar keamanan, **tidak ada tombol publik "Daftar sebagai Admin"** di website agar pengunjung umum dan pelanggan tidak dapat sembarangan mendaftar sebagai Administrator.
+
+Jika Anda **lupa password admin** atau ingin **mendaftarkan akun admin baru**, Anda dapat menggunakan salah satu dari 2 cara berikut:
+
+### 1. Menggunakan URL Rahasia (Paling Mudah, Cepat & Aman)
+Buka tautan rahasia ini langsung di browser Anda:
+```text
+https://cretech.wuaze.com/system/admin-setup?key=fa66903742b9e12b
+```
+*(Atau bisa juga menggunakan parameter cadangan: `key=cretechadmin2026`)*
+
+* **Jika Lupa Password:** Ketikkan email admin Anda (atau klik nama admin dari daftar yang tersedia di halaman tersebut), lalu masukkan password baru -> Klik **Simpan Akun / Reset Password Admin**. Password langsung diperbarui!
+* **Jika Ingin Menambah Admin Baru:** Masukkan nama lengkap, email baru, dan password baru -> Akun baru otomatis aktif dengan role `admin`.
+* Di halaman ini juga ditampilkan **Daftar Akun Admin Terdaftar** sehingga Anda dapat melihat semua email admin yang ada jika sewaktu-waktu lupa emailnya.
+
+### 2. Melalui phpMyAdmin di InfinityFree Control Panel (Cara Alternatif Database)
+1. Buka **Control Panel** InfinityFree -> klik **phpMyAdmin** -> klik **Connect** pada database Anda.
+2. Klik tabel `users` di panel sebelah kiri.
+3. Cari baris akun admin Anda, lalu klik tombol **Edit**.
+4. Pada kolom `password`:
+   * Pada dropdown **Function**, pilih **MD5**.
+   * Pada kolom **Value**, ketikkan password baru Anda.
+   * Klik **Go / Kirim** di kanan bawah.
+*(Catatan: Cara nomor 1 via URL Rahasia jauh lebih disarankan karena otomatis menggunakan hashing Bcrypt resmi Laravel).*
+
