@@ -240,30 +240,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2026_09_22_010000_add_activation_code_to_devices_table', 1);
 
 -- ------------------------------------------------------------
--- DEFAULT INITIAL USERS (Password: password)
+-- DEFAULT INITIAL ADMINISTRATOR ACCOUNTS (Production)
 -- ------------------------------------------------------------
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator CreTech', 'admin@reviewin.test', NOW(), '$2y$10$6q91qr2K9QJGy.ns9R5IYuyM7sx6qcgjqVi4hZCXH6S3rQpeiOpxe', 'admin', '081199887766', NOW(), NOW()),
-(2, 'Budi Santoso', 'owner@reviewin.test', NOW(), '$2y$10$6q91qr2K9QJGy.ns9R5IYuyM7sx6qcgjqVi4hZCXH6S3rQpeiOpxe', 'business_owner', '081234567890', NOW(), NOW());
-
--- ------------------------------------------------------------
--- DEFAULT INITIAL BUSINESSES
--- ------------------------------------------------------------
-INSERT INTO `businesses` (`id`, `user_id`, `name`, `slug`, `category`, `address`, `phone`, `email`, `google_place_id`, `google_review_url`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Kopi Kenangan Senopati', 'kopi-kenangan-senopati', 'Coffee Shop & Bakery', 'Jl. Senopati No. 42, Kebayoran Baru, Jakarta Selatan', '021-5551234', 'senopati@kopikenangan.test', 'ChIJN1t_tDeuEmsRUsoyG83frY4', 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4', 1, NOW(), NOW()),
-(2, 2, 'Warung Steak & Shake Bintaro', 'warung-steak-shake-bintaro', 'Restoran & Kuliner', 'Jl. Bintaro Utama Sektor 3A, Tangerang Selatan', '021-7778899', 'bintaro@warungsteak.test', 'ChIJk7Qz9n7taS4R8k2p-uA0oZg', 'https://search.google.com/local/writereview?placeid=ChIJk7Qz9n7taS4R8k2p-uA0oZg', 1, NOW(), NOW());
-
--- ------------------------------------------------------------
--- DEFAULT INITIAL DEVICES
--- ------------------------------------------------------------
-INSERT INTO `devices` (`id`, `device_code`, `activation_code`, `business_id`, `name`, `type`, `status`, `total_scans`, `created_at`, `updated_at`) VALUES
-(1, 'REV-DEMO01', 'ACT-DEMO01', 1, 'Meja Kasir Utama', 'qr_nfc', 'active', 5, NOW(), NOW()),
-(2, 'REV-DEMO02', 'ACT-DEMO02', 1, 'Meja Bar Depan', 'qr', 'active', 3, NOW(), NOW()),
-(3, 'REV-DEMO03', 'ACT-DEMO03', 1, 'Meja Outdoor #1', 'nfc', 'active', 2, NOW(), NOW()),
-(4, 'REV-DEMO04', 'ACT-DEMO04', 2, 'Sticker Meja VIP 01', 'qr_nfc', 'active', 8, NOW(), NOW()),
-(5, 'REV-DEMO05', 'ACT-DEMO05', 2, 'Stand Meja Kasir', 'qr', 'active', 4, NOW(), NOW()),
-(6, 'REV-NEW001', 'ACT-NEW001', NULL, 'Kartu Baru Batch #1', 'qr_nfc', 'unactivated', 0, NOW(), NOW()),
-(7, 'REV-NEW002', 'ACT-NEW002', NULL, 'Kartu Baru Batch #1', 'qr_nfc', 'unactivated', 0, NOW(), NOW()),
-(8, 'REV-NEW003', 'ACT-NEW003', NULL, 'Sticker Baru Batch #1', 'qr', 'unactivated', 0, NOW(), NOW());
+(1, 'Administrator CreTech', 'admin@cretech.com', NOW(), '$2y$10$O/Lw.oKEZfkgFjupSF6HeebDaGSMr1aVozpNxl4yLSm54SyAkkJly', 'admin', '081234567890', NOW(), NOW()),
+(2, 'Administrator CreTech', 'admin@reviewin.test', NOW(), '$2y$10$6q91qr2K9QJGy.ns9R5IYuyM7sx6qcgjqVi4hZCXH6S3rQpeiOpxe', 'admin', '081199887766', NOW(), NOW());
 
 SET FOREIGN_KEY_CHECKS=1;

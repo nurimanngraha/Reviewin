@@ -56,15 +56,18 @@ Route::get('/system/migrate', function () {
         }
 
         return response('<div style="background:#0f172a;color:#f8fafc;padding:30px;font-family:sans-serif;min-height:100vh;">' .
-            '<h1 style="color:#10b981;margin-bottom:10px;">✅ Migrasi & Seeding Berhasil!</h1>' .
-            '<p style="color:#94a3b8;">Database InfinityFree telah selesai disiapkan secara otomatis.</p>' .
-            '<hr style="border-color:#334155;margin:20px 0;">' .
-            '<h3 style="color:#38bdf8;">Log Artisan Migrate:</h3>' .
-            '<pre style="background:#1e293b;padding:15px;border-radius:8px;color:#a5b4fc;overflow-x:auto;">' . e($migrateOutput ?: 'Semua tabel sudah up-to-date.') . '</pre>' .
-            '<h3 style="color:#38bdf8;margin-top:20px;">Log Artisan Seed:</h3>' .
-            '<pre style="background:#1e293b;padding:15px;border-radius:8px;color:#a5b4fc;overflow-x:auto;">' . e($seedOutput ?: 'Seeding selesai.') . '</pre>' .
-            '<div style="margin-top:25px;display:flex;gap:12px;flex-wrap:wrap;">' .
-            '<a href="' . route('login') . '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">Menuju Halaman Login &rarr;</a>' .
+            '<h1 style="color:#10b981;margin-bottom:10px;">✅ Database Siap untuk Rilis Produksi!</h1>' .
+            '<p style="color:#94a3b8;">Database InfinityFree telah selesai di-reset dan akun administrator siap digunakan.</p>' .
+            '<div style="background:#1e293b;padding:20px;border-radius:12px;margin:20px 0;border:1px solid #334155;max-width:550px;">' .
+            '<h3 style="color:#38bdf8;margin-top:0;">Akun Administrator Produksi:</h3>' .
+            '<p style="margin:8px 0;font-size:15px;"><strong>Email Utama:</strong> <code style="color:#38bdf8;background:#0f172a;padding:4px 8px;border-radius:6px;">admin@cretech.com</code></p>' .
+            '<p style="margin:8px 0;font-size:15px;"><strong>Password:</strong> <code style="color:#38bdf8;background:#0f172a;padding:4px 8px;border-radius:6px;">admincretech2026</code></p>' .
+            '<hr style="border-color:#334155;margin:12px 0;">' .
+            '<p style="margin:8px 0;font-size:13px;color:#94a3b8;"><strong>Email Cadangan:</strong> <code style="color:#a5b4fc;background:#0f172a;padding:3px 6px;border-radius:4px;">admin@reviewin.test</code> (Password: <code>password</code>)</p>' .
+            '</div>' .
+            '<div style="margin-top:25px;display:flex;gap:15px;flex-wrap:wrap;">' .
+            '<a href="' . route('login') . '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">🚀 Masuk ke Halaman Login &rarr;</a>' .
+            '<a href="' . url('/system/migrate?key=' . $secret . '&fresh=1') . '" onclick="return confirm(\'PERINGATAN: Ini akan menghapus semua tabel dan mengulang dari nol. Lanjutkan?\')" style="display:inline-block;padding:12px 24px;background:#ef4444;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">🔄 Reset Ulang Database Lagi</a>' .
             '</div></div>');
     } catch (\Throwable $e) {
         $isTableExists = str_contains($e->getMessage(), 'already exists') || $e->getCode() == '42S01';
@@ -72,10 +75,10 @@ Route::get('/system/migrate', function () {
         if ($isTableExists) {
             return response('<div style="background:#0f172a;color:#f8fafc;padding:30px;font-family:sans-serif;min-height:100vh;">' .
                 '<h1 style="color:#38bdf8;margin-bottom:10px;">ℹ️ Tabel Database Sudah Ada!</h1>' .
-                '<p style="color:#94a3b8;">Tabel-tabel database Anda (termasuk tabel <code>users</code>) sudah berhasil dibuat di InfinityFree. Website Anda sudah siap digunakan!</p>' .
+                '<p style="color:#94a3b8;">Tabel-tabel database Anda sudah terpasang. Klik tombol merah di bawah untuk melakukan reset bersih dan membuat akun admin baru.</p>' .
                 '<div style="margin-top:25px;display:flex;gap:15px;flex-wrap:wrap;">' .
-                '<a href="' . route('login') . '" style="display:inline-block;padding:12px 24px;background:#10b981;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">🚀 Langsung Buka Halaman Login &rarr;</a>' .
-                '<a href="' . url('/system/migrate?key=' . $secret . '&fresh=1') . '" onclick="return confirm(\'PERINGATAN: Ini akan menghapus semua tabel dan mengulang dari nol. Lanjutkan?\')" style="display:inline-block;padding:12px 24px;background:#ef4444;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">🔄 Reset Ulang Database (Fresh)</a>' .
+                '<a href="' . url('/system/migrate?key=' . $secret . '&fresh=1') . '" onclick="return confirm(\'PERINGATAN: Ini akan mengosongkan database dan membuat ulang akun admin. Lanjutkan?\')" style="display:inline-block;padding:12px 24px;background:#ef4444;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">🔄 Reset Bersih & Buat Akun Admin Sekarang &rarr;</a>' .
+                '<a href="' . route('login') . '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">Buka Halaman Login</a>' .
                 '</div></div>');
         }
 

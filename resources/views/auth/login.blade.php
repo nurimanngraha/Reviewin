@@ -86,24 +86,6 @@
                     </button>
                 </form>
 
-                <!-- Quick Demo Credentials Fillers -->
-                <div class="mt-6 pt-5 border-t border-slate-200">
-                    <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider text-center mb-3">Akun Demo
-                        Cepat</p>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button type="button"
-                            onclick="document.getElementById('email').value='admin@reviewin.test'; document.getElementById('password').value='password';"
-                            class="py-2 px-3 text-xs font-medium rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition-colors text-center border border-slate-200">
-                            🔑 Admin Demo
-                        </button>
-                        <button type="button"
-                            onclick="document.getElementById('email').value='owner@reviewin.test'; document.getElementById('password').value='password';"
-                            class="py-2 px-3 text-xs font-medium rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition-colors text-center border border-emerald-200">
-                            🏪 Pemilik Bisnis
-                        </button>
-                    </div>
-                </div>
-
                 <div class="mt-5 text-center text-xs text-slate-600">
                     Belum punya akun Pemilik Bisnis?
                     <a href="{{ route('register', !empty($redirect) ? ['redirect' => $redirect] : []) }}"
