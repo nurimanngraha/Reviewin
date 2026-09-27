@@ -12,10 +12,9 @@
 
     <!-- Navigation Header -->
     <header class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between border-b border-slate-800">
-        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-            <div class="h-11 px-3 py-1 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
-                <img src="{{ asset('assets/CreTechlogo.svg') }}" alt="CreTech" class="h-8 w-auto object-contain">
-            </div>
+        <a href="{{ route('home') }}" class="flex items-center group py-2">
+            <img src="{{ asset('assets/CreTechlogin.svg') }}" alt="CreTech" 
+                 class="h-10 sm:h-11 w-auto max-w-[170px] sm:max-w-[200px] object-contain drop-shadow-md group-hover:scale-105 transition-transform">
         </a>
 
         <div class="flex items-center gap-3">
