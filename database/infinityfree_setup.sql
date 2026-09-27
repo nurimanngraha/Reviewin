@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(191) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin','business_owner') NOT NULL DEFAULT 'business_owner',
@@ -32,7 +32,7 @@ CREATE TABLE `users` (
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
+  `email` varchar(191) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
@@ -43,7 +43,7 @@ CREATE TABLE `password_reset_tokens` (
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
-  `id` varchar(255) NOT NULL,
+  `id` varchar(191) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `ip_address` varchar(45) DEFAULT NULL,
   `user_agent` text DEFAULT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `sessions` (
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `cache`;
 CREATE TABLE `cache` (
-  `key` varchar(255) NOT NULL,
+  `key` varchar(191) NOT NULL,
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL,
   PRIMARY KEY (`key`)
@@ -70,7 +70,7 @@ CREATE TABLE `cache` (
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `cache_locks`;
 CREATE TABLE `cache_locks` (
-  `key` varchar(255) NOT NULL,
+  `key` varchar(191) NOT NULL,
   `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL,
   PRIMARY KEY (`key`)
@@ -82,7 +82,7 @@ CREATE TABLE `cache_locks` (
 DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) NOT NULL,
+  `queue` varchar(191) NOT NULL,
   `payload` longtext NOT NULL,
   `attempts` tinyint(3) UNSIGNED NOT NULL,
   `reserved_at` int(10) UNSIGNED DEFAULT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE `jobs` (
 -- ------------------------------------------------------------
 DROP TABLE IF EXISTS `job_batches`;
 CREATE TABLE `job_batches` (
-  `id` varchar(255) NOT NULL,
+  `id` varchar(191) NOT NULL,
   `name` varchar(255) NOT NULL,
   `total_jobs` int(11) NOT NULL,
   `pending_jobs` int(11) NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `job_batches` (
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL,
+  `uuid` varchar(191) NOT NULL,
   `connection` text NOT NULL,
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE `businesses` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
+  `slug` varchar(191) NOT NULL,
   `category` varchar(100) DEFAULT NULL,
   `address` text DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
