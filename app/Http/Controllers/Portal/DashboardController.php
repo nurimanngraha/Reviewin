@@ -43,13 +43,13 @@ class DashboardController extends Controller
         $rawChartData = Scan::select(
             DB::raw('DATE(scanned_at) as scan_date'),
             DB::raw('COUNT(*) as total'),
-            DB::raw('SUM(CASE WHEN scan_type = "qr" THEN 1 ELSE 0 END) as qr_count'),
-            DB::raw('SUM(CASE WHEN scan_type = "nfc" THEN 1 ELSE 0 END) as nfc_count')
+            DB::raw("SUM(CASE WHEN scan_type = 'qr' THEN 1 ELSE 0 END) as qr_count"),
+            DB::raw("SUM(CASE WHEN scan_type = 'nfc' THEN 1 ELSE 0 END) as nfc_count")
         )
             ->whereIn('business_id', $businessIds)
             ->where('scanned_at', '>=', $startDate)
-            ->groupBy('scan_date')
-            ->orderBy('scan_date', 'asc')
+            ->groupBy(DB::raw('DATE(scanned_at)'))
+            ->orderBy(DB::raw('DATE(scanned_at)'), 'asc')
             ->get()
             ->keyBy('scan_date');
 

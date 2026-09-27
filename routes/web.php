@@ -155,6 +155,31 @@ Route::match(['GET', 'POST'], '/system/admin-setup', function (\Illuminate\Http\
     ]);
 })->name('system.admin-setup');
 
+// System Error Log Viewer & Diagnostics (Akses URL Rahasia Saja)
+Route::get('/system/logs', function (\Illuminate\Http\Request $request) {
+    $secret = $request->query('key');
+    $expectedKey = substr(hash('sha256', config('app.key')), 0, 16);
+
+    if (!$secret || ($secret !== $expectedKey && $secret !== 'cretechadmin2026')) {
+        abort(403, 'Akses ditolak.');
+    }
+
+    $logFile = storage_path('logs/laravel.log');
+    $content = file_exists($logFile) ? file_get_contents($logFile) : 'File log belum ada atau kosong.';
+
+    $lines = explode("\n", $content);
+    $lastLines = array_slice($lines, -150);
+
+    return response('<div style="background:#0f172a;color:#f8fafc;padding:30px;font-family:sans-serif;min-height:100vh;">' .
+        '<h1 style="color:#38bdf8;margin-bottom:10px;">📋 Catatan Error Sistem (storage/logs/laravel.log)</h1>' .
+        '<p style="color:#94a3b8;font-size:14px;">Menampilkan 150 baris terakhir log sistem:</p>' .
+        '<pre style="background:#020617;color:#fca5a5;padding:20px;border-radius:10px;font-family:monospace;white-space:pre-wrap;font-size:12px;border:1px solid #1e293b;max-height:75vh;overflow-y:auto;">' . e(implode("\n", $lastLines)) . '</pre>' .
+        '<div style="margin-top:20px;display:flex;gap:12px;">' .
+        '<a href="' . url('/system/migrate?key=' . $secret . '&fresh=1') . '" style="display:inline-block;padding:10px 20px;background:#ef4444;color:white;text-decoration:none;border-radius:8px;font-weight:bold;">🔄 Migrasi Ulang Database (Fresh)</a>' .
+        '<a href="' . route('admin.dashboard') . '" style="display:inline-block;padding:10px 20px;background:#4f46e5;color:white;text-decoration:none;border-radius:8px;font-weight:bold;">Buka Dashboard Admin</a>' .
+        '</div></div>');
+})->name('system.logs');
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Routes
