@@ -29,14 +29,21 @@
            class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-200 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-y-0 shrink-0 flex flex-col shadow-2xl h-screen">
         
         <!-- Brand Logo -->
-        <div class="min-h-[4.75rem] py-3 px-4 flex items-center justify-between border-b border-slate-800 bg-slate-950">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center group flex-1">
+        <div class="h-16 py-3 px-4 flex items-center justify-between border-b border-slate-800 bg-slate-950 shrink-0">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center group flex-1 overflow-hidden">
                 <img src="{{ asset('assets/CreTechNavbarAdmin.svg') }}" 
                      alt="CreTech Admin" 
-                     style="width: {{ $navbarLogoWidth }}; max-width: 100%; height: auto;" 
+                     width="267"
+                     height="110"
+                     loading="eager"
+                     fetchpriority="high"
+                     style="width: {{ $navbarLogoWidth }}; max-width: 100%; height: auto; aspect-ratio: 267/110;" 
                      class="object-contain transition-transform duration-200 group-hover:scale-105">
             </a>
-            <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white shrink-0 ml-2">
+            <button @click="sidebarOpen = false" 
+                    type="button"
+                    aria-label="Tutup Menu"
+                    class="lg:hidden p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg shrink-0 ml-2 transition-colors">
                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
         </div>
@@ -118,25 +125,38 @@
     <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         <!-- Topbar Header -->
-        <header class="h-16 shrink-0 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 shadow-sm z-10">
-            <div class="flex items-center gap-3">
-                <button @click="sidebarOpen = true" class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100">
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        <header class="h-14 sm:h-16 shrink-0 bg-white/95 backdrop-blur-sm border-b border-slate-200 flex items-center justify-between px-3 sm:px-6 lg:px-8 shadow-xs z-10 sticky top-0">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-2 sm:mr-4">
+                <button @click="sidebarOpen = true" 
+                        type="button"
+                        aria-label="Buka Menu"
+                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-500/20 shrink-0 transition-colors">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
-                <h1 class="text-lg font-bold text-slate-900">@yield('page_title', 'Admin Panel')</h1>
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-base lg:text-lg font-bold text-slate-900 truncate leading-snug" title="@yield('page_title', 'Admin Panel')">
+                        @yield('page_title', 'Admin Panel')
+                    </h1>
+                </div>
             </div>
 
             <!-- Topbar Actions -->
-            <div class="flex items-center gap-3">
-                <a href="{{ route('admin.devices.create') }}" class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm transition-all hover:shadow-md">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-                    <span>Buat Perangkat Baru</span>
-                </a>
+            <div class="flex items-center gap-2 shrink-0">
+                @hasSection('topbar_actions')
+                    @yield('topbar_actions')
+                @else
+                    <a href="{{ route('admin.devices.create') }}" 
+                       class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-600/20 transition-all hover:shadow-md hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+                        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+                        <span class="hidden sm:inline">Buat Perangkat Baru</span>
+                        <span class="sm:hidden text-xs">Perangkat Baru</span>
+                    </a>
+                @endif
             </div>
         </header>
 
         <!-- Main View Content -->
-        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <main class="flex-1 overflow-y-auto p-3.5 sm:p-6 lg:p-8">
             @yield('content')
         </main>
     </div>

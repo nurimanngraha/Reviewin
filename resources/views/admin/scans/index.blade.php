@@ -3,12 +3,20 @@
 @section('title', 'Log Telemetri Scan & Tap - CreTech')
 @section('page_title', 'Log Telemetri Pemindaian QR & NFC')
 
+@section('topbar_actions')
+    <a href="{{ route('admin.scans.index') }}" 
+       class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors whitespace-nowrap">
+        <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+        <span>Refresh</span>
+    </a>
+@endsection
+
 @section('content')
 <div class="space-y-6">
 
     <!-- Filter Bar -->
-    <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
-        <form method="GET" action="{{ route('admin.scans.index') }}" class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+    <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm">
+        <form method="GET" action="{{ route('admin.scans.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             
             <div>
                 <select name="scan_type" class="w-full rounded-xl border-slate-300 text-xs py-2 px-3 focus:border-brand-500 focus:ring-brand-500">

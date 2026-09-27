@@ -33,6 +33,42 @@ Route::get('/activate/{code}', [ActivationController::class, 'show'])->name('dev
 Route::post('/activate/{code}', [ActivationController::class, 'process'])->name('device.activate.process');
 Route::get('/activated/{code}/success', [ActivationController::class, 'success'])->name('device.activated.success');
 
+// Web Installer & Migrator for Shared Hosting (InfinityFree, cPanel without SSH)
+Route::get('/system/migrate', function () {
+    $secret = request()->query('key');
+    $expectedKey = substr(hash('sha256', config('app.key')), 0, 16);
+
+    if (!$secret || $secret !== $expectedKey) {
+        abort(403, 'Akses migrasi sistem ditolak. Kunci otentikasi salah.');
+    }
+
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate --force');
+        $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        \Illuminate\Support\Facades\Artisan::call('db:seed --force');
+        $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+
+        return response('<div style="background:#0f172a;color:#f8fafc;padding:30px;font-family:sans-serif;min-height:100vh;">' .
+            '<h1 style="color:#10b981;margin-bottom:10px;">✅ Migrasi & Seeding Berhasil!</h1>' .
+            '<p style="color:#94a3b8;">Database InfinityFree telah selesai disiapkan secara otomatis.</p>' .
+            '<hr style="border-color:#334155;margin:20px 0;">' .
+            '<h3 style="color:#38bdf8;">Log Artisan Migrate:</h3>' .
+            '<pre style="background:#1e293b;padding:15px;border-radius:8px;color:#a5b4fc;overflow-x:auto;">' . e($migrateOutput ?: 'Semua tabel sudah up-to-date.') . '</pre>' .
+            '<h3 style="color:#38bdf8;margin-top:20px;">Log Artisan Seed:</h3>' .
+            '<pre style="background:#1e293b;padding:15px;border-radius:8px;color:#a5b4fc;overflow-x:auto;">' . e($seedOutput ?: 'Seeding selesai.') . '</pre>' .
+            '<div style="margin-top:25px;">' .
+            '<a href="' . route('login') . '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:white;text-decoration:none;border-radius:10px;font-weight:bold;">Menuju Halaman Login &rarr;</a>' .
+            '</div></div>');
+    } catch (\Throwable $e) {
+        return response('<div style="background:#0f172a;color:#f8fafc;padding:30px;font-family:sans-serif;min-height:100vh;">' .
+            '<h1 style="color:#f43f5e;margin-bottom:10px;">❌ Terjadi Kesalahan Saat Migrasi</h1>' .
+            '<p style="color:#94a3b8;">Pastikan konfigurasi DB_HOST, DB_DATABASE, DB_USERNAME, dan DB_PASSWORD di file .env sudah benar.</p>' .
+            '<pre style="background:#1e293b;padding:15px;border-radius:8px;color:#fca5a5;overflow-x:auto;margin-top:20px;">' . e($e->getMessage()) . '</pre>' .
+            '</div>', 500);
+    }
+})->name('system.migrate');
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Routes

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Panduan Penggunaan Sistem Smart NFC & Barcode Reviewin</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 14mm 14mm 14mm 14mm;
+            @bottom-right {
+                content: counter(page);
+            }
+        }
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #1e293b;
+            background-color: #ffffff;
+            line-height: 1.5;
+            font-size: 10.5pt;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Cover / Header Section */
+        .cover {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 28px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .cover-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 8pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+            color: #c7d2fe;
+        }
+        .cover h1 {
+            font-size: 20pt;
+            font-weight: 800;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+        .cover p {
+            font-size: 10pt;
+            color: #cbd5e1;
+            margin: 0;
+            max-width: 90%;
+            line-height: 1.4;
+        }
+        .doc-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 8pt;
+            color: #94a3b8;
+        }
+        .doc-meta span strong {
+            color: #ffffff;
+        }
+
+        /* Section Headings */
+        .actor-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-top: 22px;
+            margin-bottom: 14px;
+            page-break-after: avoid;
+        }
+        .actor-admin {
+            background-color: #f1f5f9;
+            border-left: 5px solid #0f172a;
+        }
+        .actor-merchant {
+            background-color: #eef2ff;
+            border-left: 5px solid #4f46e5;
+        }
+        .actor-customer {
+            background-color: #ecfdf5;
+            border-left: 5px solid #059669;
+        }
+        .actor-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 11pt;
+            color: #fff;
+        }
+        .icon-admin { background-color: #0f172a; }
+        .icon-merchant { background-color: #4f46e5; }
+        .icon-customer { background-color: #059669; }
+        
+        .actor-title {
+            font-size: 12.5pt;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 0;
+        }
+        .actor-subtitle {
+            font-size: 8.5pt;
+            color: #64748b;
+            margin: 0;
+        }
+
+        /* Step Cards */
+        .step-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            page-break-inside: avoid;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .step-badge {
+            background: #e2e8f0;
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 8pt;
+            padding: 2px 7px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .step-badge-admin { background: #0f172a; color: #fff; }
+        .step-badge-merchant { background: #4f46e5; color: #fff; }
+        .step-badge-customer { background: #059669; color: #fff; }
+        
+        .step-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+        .step-content {
+            font-size: 9.5pt;
+            color: #334155;
+            margin: 0;
+        }
+        .step-content ul {
+            margin: 4px 0 2px 18px;
+            padding: 0;
+        }
+        .step-content li {
+            margin-bottom: 3px;
+        }
+
+        /* Callout Box */
+        .callout {
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-top: 6px;
+            font-size: 8.5pt;
+            line-height: 1.4;
+        }
+        .callout-info {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+        }
+        .callout-warning {
+            background-color: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+        }
+        .callout-success {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        /* Tables */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8.5pt;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+        .summary-table th {
+            background: #0f172a;
+            color: #ffffff;
+            font-weight: 700;
+            text-align: left;
+            padding: 7px 10px;
+            border: 1px solid #0f172a;
+        }
+        .summary-table td {
+            padding: 7px 10px;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .summary-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        /* Page break utilities */
+        .page-break {
+            page-break-after: always;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 8pt;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cover Banner -->
+    <div class="cover">
+        <span class="cover-badge">Standard Operating Procedure (SOP)</span>
+        <h1>Panduan Operasional Sistem Reviewin</h1>
+        <p>Buku pedoman teknis dan tata laksana pemanfaatan Kartu Pintar Dual-Engine (Barcode QR & NFC NTAG213) untuk optimalisasi ulasan Google Review.</p>
+        <div class="doc-meta">
+            <span>Platform: <strong>Reviewin / CreTech</strong></span>
+            <span>Hardware Target: <strong>NTAG213 & QR Code</strong></span>
+            <span>Target Pengguna: <strong>Admin, Pemilik Bisnis, Pelanggan</strong></span>
+        </div>
+    </div>
+
+    <!-- Overview Matrix -->
+    <h3 style="font-size: 11pt; font-weight: 800; margin-bottom: 6px; color: #0f172a;">Ringkasan Peran & Tanggung Jawab Tiga Aktor</h3>
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <th style="width: 22%;">Aktor</th>
+                <th style="width: 25%;">Perangkat / Alat</th>
+                <th style="width: 25%;">Tanggung Jawab Utama</th>
+                <th style="width: 28%;">Hasil Akhir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Administrator (CreTech)</strong></td>
+                <td>Dashboard Admin, HP/NFC Writer (NFC Tools), Printer QR</td>
+                <td>Registrasi perangkat, cetak QR, write URL ke chip NTAG213</td>
+                <td>Kartu fisik siap kirim (status: <em>Unactivated</em>)</td>
+            </tr>
+            <tr>
+                <td><strong>2. Pemilik Bisnis (Merchant)</strong></td>
+                <td>Smartphone kamera/NFC, Kemasan Kartu (Kode Kartu)</td>
+                <td>Tap/Scan pertama kali, input kode aktivasi, hubungkan Google Place</td>
+                <td>Kartu aktif (status: <em>Active</em>), siap di kasir</td>
+            </tr>
+            <tr>
+                <td><strong>3. Pelanggan (Customer)</strong></td>
+                <td>Smartphone pribadi (iPhone / Android)</td>
+                <td>Tap kartu NFC atau scan Barcode QR di meja kasir</td>
+                <td>Langsung memberi rating bintang 5 di Google Review</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ==================== BAGIAN 1: ADMIN ==================== -->
+    <div class="actor-header actor-admin">
+        <div class="actor-icon icon-admin">A</div>
+        <div>
+            <div class="actor-title">1. Panduan Pengguna: ADMINISTRATOR (CreTech)</div>
+            <div class="actor-subtitle">Bertanggung jawab atas penciptaan aset perangkat, penulisan chip NFC, dan pencetakan kartu fisik.</div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-admin">Langkah 1</span>
+            <span class="step-title">Pendaftaran Perangkat di Dashboard Admin</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Buka dashboard Admin Reviewin pada menu <strong>Perangkat (Devices)</strong> &rarr; klik <strong>Tambah Perangkat Baru</strong>.</li>
+                <li>Pilih tipe perangkat: <strong>QR + NFC</strong>.</li>
+                <li>Sistem akan secara otomatis men-generate:
+                    <ul>
+                        <li><strong>Device Code</strong> unik (misal: <code>DEV-820192</code>).</li>
+                        <li><strong>Kode Kartu / Activation Code</strong> (misal: <code>ACT-492019</code>).</li>
+                    </ul>
+                </li>
+                <li>Simpan perangkat. Status default perangkat adalah <strong style="color: #d97706;">Unactivated</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-admin">Langkah 2</span>
+            <span class="step-title">Pengambilan URL NFC & Unduh Barcode (QR Code)</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Buka halaman detail perangkat yang baru dibuat.</li>
+                <li>Unduh aset <strong>QR Code (SVG atau PNG)</strong> untuk dicetak ke kartu akrilik atau stiker kemasan.</li>
+                <li>Pada kotak <em>"URL Tag NFC"</em>, salin link redirect NFC, formatnya:
+                    <br><code>https://domain-anda.com/r/DEV-820192?t=nfc</code>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-admin">Langkah 3</span>
+            <span class="step-title">Pemrograman (Flashing / Writing) ke Chip NTAG213</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Buka aplikasi <strong>NFC Tools</strong> di smartphone Android / iPhone Anda.</li>
+                <li>Pilih menu <strong>Write</strong> &rarr; klik <strong>Add a record</strong> &rarr; pilih <strong>Custom URL / URI</strong>.</li>
+                <li>Tempelkan (Paste) URL NFC perangkat tadi (pastikan menggunakan protokol <code>https://</code>).</li>
+                <li>Klik tombol <strong>Write</strong>, lalu tempelkan kartu NTAG213 ke punggung HP hingga muncul tanda centang hijau <em>Write Complete!</em>.</li>
+            </ul>
+            <div class="callout callout-warning">
+                <strong>Catatan Keamanan Produksi:</strong> Setelah kartu terbukti berfungsi normal, gunakan opsi <em>Lock Tag</em> agar chip bersifat <em>Read-Only</em> dan tidak bisa ditimpa oleh pihak tidak bertanggung jawab saat sudah di meja kasir toko.
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-admin">Langkah 4</span>
+            <span class="step-title">Pengemasan & Penyerahan ke Pemilik Bisnis</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Cetak atau sertakan <strong>Kode Kartu (Activation Code)</strong> pada amplop/kemasan fisik kartu.</li>
+                <li>Kirimkan paket fisik ke Pemilik Bisnis. Kartu siap untuk diaktivasi mandiri oleh pembeli.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- ==================== BAGIAN 2: PEMILIK BISNIS ==================== -->
+    <div class="actor-header actor-merchant">
+        <div class="actor-icon icon-merchant">B</div>
+        <div>
+            <div class="actor-title">2. Panduan Pengguna: PEMILIK BISNIS (Merchant)</div>
+            <div class="actor-subtitle">Cukup dilakukan 1 KALI saat menerima kartu fisik. Tidak memerlukan install aplikasi apapun.</div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-merchant">Langkah 1</span>
+            <span class="step-title">Penerimaan & Pemindaian Pertama (First Tap / Scan)</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Keluarkan kartu fisik dari kemasan.</li>
+                <li>Pilih salah satu metode di smartphone Anda:
+                    <ul>
+                        <li><strong>Opsi NFC:</strong> Tempelkan punggung smartphone Anda ke kartu.</li>
+                        <li><strong>Opsi Barcode:</strong> Buka kamera HP Anda dan arahkan ke QR Code pada kartu.</li>
+                    </ul>
+                </li>
+                <li>HP Anda akan secara otomatis membuka peramban (browser) menuju halaman aktivasi Reviewin.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-merchant">Langkah 2</span>
+            <span class="step-title">Login / Pendaftaran Akun Pemilik Bisnis</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Jika belum masuk, masukkan email & password akun Anda, atau klik <em>Daftar Akun Baru</em>.</li>
+                <li>Setelah berhasil login, formulir aktivasi perangkat akan otomatis ditampilkan.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-merchant">Langkah 3</span>
+            <span class="step-title">Verifikasi Kode Kartu & Hubungkan Lokasi Google Review</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li><strong>Kode Kartu:</strong> Masukkan kode aktivasi fisik yang tercantum di kemasan (contoh: <code>ACT-492019</code>).</li>
+                <li><strong>Pilih Toko:</strong> Pilih nama profil bisnis Anda, atau daftarkan nama bisnis baru jika ini adalah cabang baru.</li>
+                <li><strong>Google Place ID / Link Review:</strong> Masukkan Google Place ID atau link profil Google Maps bisnis Anda.</li>
+                <li>Klik tombol <strong>"Aktivasi Perangkat Sekarang"</strong>.</li>
+            </ul>
+            <div class="callout callout-success">
+                <strong>Otomatisasi Sistem:</strong> Pada detik tombol aktivasi ditekan, status kartu di server langsung berubah menjadi <strong>ACTIVE</strong>. Mulai detik ini, <strong>NFC DAN BARCODE OTOMATIS AKTIF BERSAMAAN</strong> tanpa perlu setting ulang!
+            </div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-merchant">Langkah 4</span>
+            <span class="step-title">Penempatan Kartu & Monitoring Statistik Toko</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Letakkan kartu/standee akrilik di tempat yang strategis (area meja kasir, dekat mesin EDC, atau meja makan tamu).</li>
+                <li>Pemilik bisnis dapat masuk ke <strong>Portal Merchant</strong> kapan saja untuk melihat grafik kunjungan, total tap NFC, total scan barcode, dan analitik ulasan yang masuk.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== BAGIAN 3: PELANGGAN ==================== -->
+    <div class="actor-header actor-customer">
+        <div class="actor-icon icon-customer">C</div>
+        <div>
+            <div class="actor-title">3. Panduan Pengguna: PELANGGAN TOKO (Customer)</div>
+            <div class="actor-subtitle">Pengalaman ulasan instan &lt; 2 detik tanpa install aplikasi dan tanpa login portal.</div>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-customer">Pilihan A</span>
+            <span class="step-title">Memberikan Review via Tap NFC (Paling Cepat)</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Pastikan smartphone memiliki fitur NFC aktif (pada iPhone XS ke atas otomatis aktif).</li>
+                <li>Cukup tempelkan smartphone ke logo NFC pada kartu selama 1 detik.</li>
+                <li>Pop-up Google Review toko langsung muncul otomatis di layar HP.</li>
+                <li>Beri rating <strong>Bintang 5</strong>, ketik komentar ulasan, lalu tekan <strong>Posting / Kirim</strong>.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <span class="step-badge step-badge-customer">Pilihan B</span>
+            <span class="step-title">Memberikan Review via Scan Barcode (Alternatif Universal)</span>
+        </div>
+        <div class="step-content">
+            <ul>
+                <li>Digunakan untuk pelanggan dengan model smartphone yang belum mendukung NFC.</li>
+                <li>Buka aplikasi <strong>Kamera bawaan HP</strong>, arahkan lensa ke QR Code pada kartu.</li>
+                <li>Ketuk notifikasi tautan yang muncul di layar.</li>
+                <li>Halaman Google Review toko langsung terbuka seketika untuk diisi ulasan.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Troubleshooting Box -->
+    <div class="callout callout-info" style="margin-top: 14px;">
+        <strong style="color: #0f172a;">Pusat Bantuan & Kendala Umum (Troubleshooting):</strong>
+        <ul style="margin: 4px 0 0 16px; padding: 0;">
+            <li><strong>HP tidak merespon saat Tap NFC:</strong> Pastikan layar HP menyala (tidak terkunci) dan tempelkan di posisi sensor NFC HP (iPhone ada di bagian atas belakang, Android umumnya di bagian tengah/kamera).</li>
+            <li><strong>Toko pindah lokasi / ganti nama:</strong> Pemilik bisnis tidak perlu ganti kartu fisik! Cukup edit Google Place ID di Portal Merchant, kartu lama otomatis mengarah ke link baru.</li>
+        </ul>
+    </div>
+
+    <div class="footer-note">
+        Dokumen Resmi Panduan Operasional Sistem Smart Review &copy; Reviewin Platform - All Rights Reserved.
+    </div>
+
+</body>
+</html>

@@ -8,6 +8,10 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('assets/CreTechFavicon.svg') }}">
     <link rel="alternate icon" href="{{ asset('assets/CreTechFavicon.svg') }}">
 
+    <!-- Preload Navbar Assets for Instant Rendering -->
+    <link rel="preload" as="image" href="{{ asset('assets/CreTechNavbarAdmin.svg') }}" fetchpriority="high">
+    <link rel="preload" as="image" href="{{ asset('assets/CreTechNavbarBisnis.svg') }}" fetchpriority="high">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +55,8 @@
     <style>
         [x-cloak] { display: none !important; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .scrollbar-none::-webkit-scrollbar { display: none; }
+        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     @stack('styles')
 </head>

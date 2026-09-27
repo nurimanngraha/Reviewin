@@ -3,26 +3,35 @@
 @section('title', 'Kelola Pengguna - CreTech')
 @section('page_title', 'Manajemen Pengguna')
 
+@section('topbar_actions')
+    <a href="{{ route('admin.users.create') }}" 
+       class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-600/20 transition-all hover:shadow-md hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+        <span class="hidden sm:inline">Tambah Pengguna</span>
+        <span class="sm:hidden text-xs">Pengguna Baru</span>
+    </a>
+@endsection
+
 @section('content')
 <div class="space-y-6">
 
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 overflow-x-auto scrollbar-none whitespace-nowrap py-1">
             <a href="{{ route('admin.users.index') }}" 
-               class="px-3 py-1.5 rounded-lg text-xs font-semibold {{ empty($roleFilter) ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
+               class="px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 {{ empty($roleFilter) ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
                 Semua Role
             </a>
             <a href="{{ route('admin.users.index', ['role' => 'admin']) }}" 
-               class="px-3 py-1.5 rounded-lg text-xs font-semibold {{ $roleFilter === 'admin' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
+               class="px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 {{ $roleFilter === 'admin' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
                 Administrator
             </a>
             <a href="{{ route('admin.users.index', ['role' => 'business_owner']) }}" 
-               class="px-3 py-1.5 rounded-lg text-xs font-semibold {{ $roleFilter === 'business_owner' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
+               class="px-3 py-1.5 rounded-lg text-xs font-semibold shrink-0 {{ $roleFilter === 'business_owner' ? 'bg-emerald-600 text-white' : 'bg-white text-slate-700 border border-slate-200' }}">
                 Pemilik Bisnis
             </a>
         </div>
 
-        <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all whitespace-nowrap">
+        <a href="{{ route('admin.users.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all whitespace-nowrap">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
             <span>+ Tambah Pengguna</span>
         </a>

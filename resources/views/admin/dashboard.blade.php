@@ -3,14 +3,23 @@
 @section('title', 'Admin Dashboard - CreTech')
 @section('page_title', 'Ringkasan & Statistik Sistem')
 
+@section('topbar_actions')
+    <a href="{{ route('admin.devices.create') }}" 
+       class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-600/20 transition-all hover:shadow-md hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+        <span class="hidden sm:inline">Buat Perangkat Baru</span>
+        <span class="sm:hidden text-xs">Perangkat Baru</span>
+    </a>
+@endsection
+
 @section('content')
 <div class="space-y-6">
 
     <!-- KPI Statistics Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
         
         <!-- Total Devices -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex items-center justify-between">
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-sm flex items-center justify-between">
             <div>
                 <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Perangkat</p>
                 <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ number_format($totalDevices) }}</h3>

@@ -3,6 +3,15 @@
 @section('title', 'Manajemen Perangkat QR & NFC - CreTech')
 @section('page_title', 'Daftar Perangkat QR & NFC')
 
+@section('topbar_actions')
+    <a href="{{ route('admin.devices.create') }}" 
+       class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-sm shadow-brand-600/20 transition-all hover:shadow-md hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+        <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" /></svg>
+        <span class="hidden sm:inline">Buat Perangkat Baru</span>
+        <span class="sm:hidden text-xs">Perangkat Baru</span>
+    </a>
+@endsection
+
 @section('content')
 <div class="space-y-6" x-data="{ resetModal: false, selectedDevice: null, resetUrl: '' }">
 
@@ -10,38 +19,38 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         
         <!-- Status Tabs -->
-        <div class="flex items-center gap-1.5 p-1 bg-slate-200/80 rounded-xl overflow-x-auto text-xs font-semibold">
+        <div class="flex items-center gap-1.5 p-1 bg-slate-200/80 rounded-xl overflow-x-auto scrollbar-none text-xs font-semibold whitespace-nowrap">
             <a href="{{ route('admin.devices.index') }}" 
-               class="px-3 py-1.5 rounded-lg transition-all {{ empty($filters['status']) ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
+               class="px-3 py-1.5 rounded-lg transition-all shrink-0 {{ empty($filters['status']) ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Semua ({{ $counts['all'] }})
             </a>
             <a href="{{ route('admin.devices.index', ['status' => 'unactivated']) }}" 
-               class="px-3 py-1.5 rounded-lg transition-all {{ ($filters['status'] ?? '') === 'unactivated' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
+               class="px-3 py-1.5 rounded-lg transition-all shrink-0 {{ ($filters['status'] ?? '') === 'unactivated' ? 'bg-amber-500 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Belum Aktif ({{ $counts['unactivated'] }})
             </a>
             <a href="{{ route('admin.devices.index', ['status' => 'active']) }}" 
-               class="px-3 py-1.5 rounded-lg transition-all {{ ($filters['status'] ?? '') === 'active' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
+               class="px-3 py-1.5 rounded-lg transition-all shrink-0 {{ ($filters['status'] ?? '') === 'active' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Aktif ({{ $counts['active'] }})
             </a>
             <a href="{{ route('admin.devices.index', ['status' => 'inactive']) }}" 
-               class="px-3 py-1.5 rounded-lg transition-all {{ ($filters['status'] ?? '') === 'inactive' ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
+               class="px-3 py-1.5 rounded-lg transition-all shrink-0 {{ ($filters['status'] ?? '') === 'inactive' ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Nonaktif ({{ $counts['inactive'] }})
             </a>
             <a href="{{ route('admin.devices.index', ['status' => 'blocked']) }}" 
-               class="px-3 py-1.5 rounded-lg transition-all {{ ($filters['status'] ?? '') === 'blocked' ? 'bg-rose-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
+               class="px-3 py-1.5 rounded-lg transition-all shrink-0 {{ ($filters['status'] ?? '') === 'blocked' ? 'bg-rose-600 text-white shadow-sm' : 'text-slate-600 hover:text-slate-900' }}">
                 Diblokir ({{ $counts['blocked'] }})
             </a>
         </div>
 
-        <a href="{{ route('admin.devices.create') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all whitespace-nowrap">
+        <a href="{{ route('admin.devices.create') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all whitespace-nowrap">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
             <span>+ Buat Perangkat Baru</span>
         </a>
     </div>
 
     <!-- Filters Search & Business Dropdown -->
-    <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
-        <form method="GET" action="{{ route('admin.devices.index') }}" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200 shadow-sm">
+        <form method="GET" action="{{ route('admin.devices.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             @if(!empty($filters['status']))
                 <input type="hidden" name="status" value="{{ $filters['status'] }}">
             @endif
