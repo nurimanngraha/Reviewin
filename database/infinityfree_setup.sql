@@ -140,6 +140,7 @@ CREATE TABLE `businesses` (
   `phone` varchar(50) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `google_place_id` varchar(255) DEFAULT NULL,
+  `google_rating` decimal(3,1) DEFAULT 5.0,
   `google_review_url` text DEFAULT NULL,
   `qr_display_color` varchar(20) NOT NULL DEFAULT '#1e293b',
   `logo_url` text DEFAULT NULL,
@@ -237,7 +238,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2026_09_22_005646_create_devices_table', 1),
 (6, '2026_09_22_005648_create_activations_table', 1),
 (7, '2026_09_22_005649_create_scans_table', 1),
-(8, '2026_09_22_010000_add_activation_code_to_devices_table', 1);
+(8, '2026_09_22_010000_add_activation_code_to_devices_table', 1),
+(9, '2026_09_27_085031_add_google_rating_to_businesses_table', 1);
 
 -- ------------------------------------------------------------
 -- DEFAULT INITIAL ADMINISTRATOR ACCOUNTS (Production)

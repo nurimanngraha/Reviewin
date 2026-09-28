@@ -62,6 +62,7 @@ class BusinessController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'google_review_url' => ['required', 'url', 'max:1000'],
             'google_place_id' => ['nullable', 'string', 'max:255'],
+            'google_rating' => ['nullable', 'numeric', 'min:1.0', 'max:5.0'],
             'is_active' => ['nullable', 'boolean'],
         ], [
             'user_id.required' => 'Pemilik bisnis wajib dipilih.',
@@ -85,6 +86,7 @@ class BusinessController extends Controller
             'email' => $validated['email'] ?? null,
             'google_review_url' => $validated['google_review_url'],
             'google_place_id' => $validated['google_place_id'] ?? null,
+            'google_rating' => $validated['google_rating'] ?? 5.0,
             'is_active' => $request->boolean('is_active', true),
         ]);
 
@@ -137,6 +139,7 @@ class BusinessController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'google_review_url' => ['required', 'url', 'max:1000'],
             'google_place_id' => ['nullable', 'string', 'max:255'],
+            'google_rating' => ['nullable', 'numeric', 'min:1.0', 'max:5.0'],
             'is_active' => ['nullable', 'boolean'],
         ]);
 

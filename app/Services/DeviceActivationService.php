@@ -44,16 +44,12 @@ class DeviceActivationService
                     ->where('user_id', $user->id)
                     ->firstOrFail();
 
-                $updateData = [];
-                if (!empty($placeId)) {
-                    $updateData['google_place_id'] = $placeId;
-                    $updateData['google_review_url'] = $generatedReviewUrl;
-                } elseif (!empty($data['google_review_url'])) {
-                    $updateData['google_review_url'] = $data['google_review_url'];
-                }
-
-                if (!empty($updateData)) {
-                    $business->update($updateData);
+                // 1 Akun = 1 Bisnis: Do not alter google_place_id or business name on subsequent activations
+                if (empty($business->google_place_id) && !empty($placeId)) {
+                    $business->update([
+                        'google_place_id' => $placeId,
+                        'google_review_url' => $generatedReviewUrl,
+                    ]);
                 }
             } else {
                 // Option 2: Create new business on the fly

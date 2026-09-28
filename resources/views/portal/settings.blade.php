@@ -101,6 +101,22 @@
                             <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div>
+                        <label for="google_rating" class="block text-xs font-bold text-emerald-950 uppercase tracking-wider mb-1">
+                            <i class="fas fa-star text-amber-500 mr-1"></i> Rating Google Review Saat Ini (1.0 - 5.0)
+                        </label>
+                        <input type="number" step="0.1" min="1.0" max="5.0" id="google_rating" name="google_rating" 
+                               value="{{ old('google_rating', $selectedBusiness->google_rating ?? 5.0) }}"
+                               placeholder="5.0"
+                               class="w-full rounded-xl border-emerald-300 font-bold text-sm py-2.5 px-3.5 focus:border-emerald-500 focus:ring-emerald-500 shadow-sm bg-white">
+                        @error('google_rating')
+                            <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
+                        @enderror
+                        <p class="text-[11px] text-emerald-800/80 mt-1">
+                            Angka rating ini akan ditampilkan pada tampilan kartu CreTech Card Anda.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Business Name & Category -->

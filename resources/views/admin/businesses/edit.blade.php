@@ -107,6 +107,16 @@
                         <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <div>
+                    <label for="google_rating" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1">
+                        <i class="fas fa-star text-amber-500 mr-1"></i> Rating Google Review Saat Ini (1.0 - 5.0)
+                    </label>
+                    <input type="number" step="0.1" min="1.0" max="5.0" id="google_rating" name="google_rating"
+                           value="{{ old('google_rating', $business->google_rating ?? 5.0) }}"
+                           placeholder="5.0"
+                           class="w-full rounded-xl border-slate-300 font-bold text-sm py-2 px-3 focus:border-brand-500 focus:ring-brand-500 bg-white">
+                </div>
             </div>
 
             <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">

@@ -83,40 +83,38 @@ class ActivationController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
+        $existingBusiness = $user->businesses()->first();
 
-        $rules = [
-            'activation_code' => ['required', 'string', 'max:50'],
-            'business_id' => ['nullable', 'exists:businesses,id'],
-            'device_label' => ['nullable', 'string', 'max:100'],
-            'google_place_id' => ['required', 'string', 'min:5', 'max:150'],
-        ];
+        // Skema 1 Akun = 1 Bisnis
+        if ($existingBusiness) {
+            // Aktivasi perangkat ke-2, ke-3, dst:
+            // Nama bisnis dan Google Place ID terkunci / tidak dapat diubah, hanya label penempatan yang bisa diisi.
+            $rules = [
+                'device_label' => ['nullable', 'string', 'max:100'],
+            ];
 
-        // If new business
-        if (!$request->filled('business_id')) {
-            $rules['business_name'] = ['required', 'string', 'max:255'];
-            $rules['category'] = ['nullable', 'string', 'max:100'];
-            $rules['address'] = ['nullable', 'string', 'max:500'];
-            $rules['phone'] = ['nullable', 'string', 'max:30'];
-        }
+            $validated = $request->validate($rules);
+            $validated['business_id'] = $existingBusiness->id;
+            $validated['google_place_id'] = $existingBusiness->google_place_id;
+            $validated['activation_code'] = $device->activation_code;
+        } else {
+            // Aktivasi perangkat pertama: pendaftaran profil bisnis utama
+            $rules = [
+                'business_name' => ['required', 'string', 'max:255'],
+                'category' => ['nullable', 'string', 'max:100'],
+                'address' => ['nullable', 'string', 'max:500'],
+                'phone' => ['nullable', 'string', 'max:30'],
+                'google_place_id' => ['required', 'string', 'min:5', 'max:150'],
+                'device_label' => ['nullable', 'string', 'max:100'],
+            ];
 
-        $messages = [
-            'activation_code.required' => 'Kode Kartu (Activation Code) wajib dimasukkan untuk verifikasi perangkat.',
-            'google_place_id.required' => 'Google Place ID wajib diisi untuk menghubungkan lokasi Google Review bisnis Anda.',
-            'business_name.required' => 'Nama bisnis wajib diisi jika Anda mendaftarkan bisnis baru.',
-        ];
+            $messages = [
+                'business_name.required' => 'Nama bisnis wajib diisi untuk setup profil bisnis Anda.',
+                'google_place_id.required' => 'Google Place ID wajib diisi untuk menghubungkan lokasi Google Review bisnis Anda.',
+            ];
 
-        $validated = $request->validate($rules, $messages);
-
-        // Verify activation code against device record
-        if (!empty($device->activation_code)) {
-            $inputCode = strtoupper(trim($validated['activation_code']));
-            $expectedCode = strtoupper(trim($device->activation_code));
-
-            if ($inputCode !== $expectedCode) {
-                return back()->withInput()->withErrors([
-                    'activation_code' => 'Kode Kartu (Activation Code) yang Anda masukkan tidak sesuai dengan perangkat ini.',
-                ])->with('error', 'Validasi gagal: Kode Kartu tidak cocok.');
-            }
+            $validated = $request->validate($rules, $messages);
+            $validated['activation_code'] = $device->activation_code;
         }
 
         try {

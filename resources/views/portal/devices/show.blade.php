@@ -39,8 +39,8 @@
                 <!-- Top Row: Card Brand & Status -->
                 <div class="flex items-center justify-between mb-6 relative z-10">
                     <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-white p-1 flex items-center justify-center shadow">
-                            <img src="{{ asset('assets/CreTechlogopersegi.svg') }}" alt="CreTech" class="w-full h-full object-contain">
+                        <div class="w-7 h-7 rounded-lg bg-white p-0.5 flex items-center justify-center shadow">
+                            <img src="{{ asset('assets/CreTechFavicon.svg') }}" alt="CreTech" class="w-full h-full object-contain">
                         </div>
                         <span class="font-extrabold text-xs tracking-wider uppercase text-slate-200">CreTech Card</span>
                     </div>
@@ -50,13 +50,11 @@
                     </span>
                 </div>
 
-                <!-- EMV Chip & Contactless Wave -->
+                <!-- Google Review Rating & Contactless Wave -->
                 <div class="flex items-center justify-between my-4 relative z-10">
-                    <div class="w-10 h-8 rounded bg-amber-300/80 border border-amber-400/60 shadow-inner flex items-center justify-center">
-                        <div class="w-7 h-5 border border-amber-600/40 rounded-xs grid grid-cols-2 gap-0.5 p-0.5 opacity-60">
-                            <div class="border-r border-amber-700/30"></div>
-                            <div></div>
-                        </div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-400 border border-amber-300 shadow-md text-slate-950 font-black text-sm" title="Rating Google Review Saat Ini">
+                        <i class="fas fa-star text-xs text-amber-950"></i>
+                        <span>{{ number_format((float) ($device->business?->google_rating ?? 5.0), 1) }}</span>
                     </div>
                     <div class="text-slate-400 flex items-center gap-1" title="Contactless NFC & QR Smart Card">
                         <svg class="w-6 h-6 rotate-90 text-emerald-400/80" fill="none" viewBox="0 0 24 24" stroke="currentColor">

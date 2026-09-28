@@ -21,6 +21,7 @@ class Business extends Model
         'email',
         'google_review_url',
         'google_place_id',
+        'google_rating',
         'logo',
         'is_active',
     ];
@@ -29,6 +30,7 @@ class Business extends Model
     {
         return [
             'is_active' => 'boolean',
+            'google_rating' => 'float',
         ];
     }
 

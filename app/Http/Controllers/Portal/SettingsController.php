@@ -48,6 +48,7 @@ class SettingsController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'google_review_url' => ['required', 'url', 'max:1000'],
             'google_place_id' => ['nullable', 'string', 'max:255'],
+            'google_rating' => ['nullable', 'numeric', 'min:1.0', 'max:5.0'],
         ], [
             'name.required' => 'Nama bisnis wajib diisi.',
             'google_review_url.required' => 'Link Google Review wajib diisi.',

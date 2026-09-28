@@ -97,7 +97,7 @@ class DeviceController extends Controller
             ]);
 
             $count = (int) $request->input('count');
-            $prefix = strtoupper($request->input('prefix', 'REV'));
+            $prefix = 'REV';
             $namePrefix = $request->input('device_name_prefix', 'Review Device');
             $created = 0;
 
@@ -120,10 +120,8 @@ class DeviceController extends Controller
                 ->with('success', "Berhasil membuat {$created} perangkat baru dengan status unactivated dan Kode Kartu unik!");
         }
 
-        // Single device creation
+        // Single device creation: system auto-generates device_code and activation_code
         $validated = $request->validate([
-            'device_code' => ['nullable', 'string', 'max:30', 'unique:devices,device_code'],
-            'activation_code' => ['nullable', 'string', 'max:30', 'unique:devices,activation_code'],
             'name' => ['required', 'string', 'max:100'],
             'type' => ['required', 'in:qr_nfc,qr_only,nfc_only'],
             'business_id' => ['nullable', 'exists:businesses,id'],
@@ -132,17 +130,10 @@ class DeviceController extends Controller
             'notes' => ['nullable', 'string', 'max:500'],
         ], [
             'name.required' => 'Nama label perangkat wajib diisi.',
-            'device_code.unique' => 'Kode perangkat ini sudah digunakan.',
-            'activation_code.unique' => 'Kode aktivasi ini sudah digunakan.',
         ]);
 
-        $code = !empty($validated['device_code'])
-            ? strtoupper($validated['device_code'])
-            : $this->generateUniqueCode();
-
-        $activationCode = !empty($validated['activation_code'])
-            ? strtoupper($validated['activation_code'])
-            : Device::generateActivationCode();
+        $code = $this->generateUniqueCode();
+        $activationCode = Device::generateActivationCode();
 
         $device = Device::create([
             'device_code' => $code,

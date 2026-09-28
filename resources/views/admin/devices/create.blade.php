@@ -50,10 +50,14 @@
                     <label for="prefix" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                         Prefix Kode Unik
                     </label>
-                    <input type="text" id="prefix" name="prefix" value="{{ old('prefix', 'REV') }}" maxlength="10"
-                           class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500"
-                           placeholder="REV">
-                    <p class="text-[11px] text-slate-500 mt-1">Format hasil: <code class="font-bold">REV-XXXXXX</code></p>
+                    <div class="relative">
+                        <input type="text" id="prefix" name="prefix" value="REV" readonly
+                               class="w-full rounded-xl border-slate-200 bg-slate-100 font-mono uppercase text-sm py-2.5 px-3.5 text-slate-500 cursor-not-allowed select-none">
+                        <span class="absolute right-3 top-2.5 text-xs text-slate-400 font-semibold flex items-center gap-1">
+                            <i class="fas fa-lock text-[10px]"></i> Auto
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 mt-1">Otomatis digenerate sistem: <code class="font-bold text-slate-700">REV-XXXXXX</code></p>
                 </div>
                 <div>
                     <label for="type" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
@@ -110,26 +114,30 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                    <label for="device_code" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                        Kode Perangkat (Opsional)
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                        Kode Perangkat
                     </label>
-                    <input type="text" id="device_code" name="device_code" value="{{ old('device_code') }}"
-                           placeholder="Auto-generate"
-                           class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
-                    @error('device_code')
-                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                    @enderror
+                    <div class="relative">
+                        <input type="text" value="AUTO-GENERATE (REV-XXXXXX)" readonly
+                               class="w-full rounded-xl border-slate-200 bg-slate-100 font-mono uppercase text-xs sm:text-sm py-2.5 px-3.5 text-slate-500 cursor-not-allowed select-none">
+                        <span class="absolute right-3 top-2.5 text-xs text-slate-400 font-semibold flex items-center gap-1">
+                            <i class="fas fa-magic text-[10px]"></i> Auto
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">Dibuat otomatis oleh sistem saat disimpan.</p>
                 </div>
                 <div>
-                    <label for="activation_code" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                         Kode Kartu (Activation Code)
                     </label>
-                    <input type="text" id="activation_code" name="activation_code" value="{{ old('activation_code') }}"
-                           placeholder="Auto-generate (ACT-XXXXXX)"
-                           class="w-full rounded-xl border-slate-300 font-mono uppercase text-sm py-2.5 px-3.5 focus:border-brand-500 focus:ring-brand-500">
-                    @error('activation_code')
-                        <p class="text-xs text-rose-600 mt-1">{{ $message }}</p>
-                    @enderror
+                    <div class="relative">
+                        <input type="text" value="AUTO-GENERATE (ACT-XXXXXX)" readonly
+                               class="w-full rounded-xl border-slate-200 bg-slate-100 font-mono uppercase text-xs sm:text-sm py-2.5 px-3.5 text-slate-500 cursor-not-allowed select-none">
+                        <span class="absolute right-3 top-2.5 text-xs text-slate-400 font-semibold flex items-center gap-1">
+                            <i class="fas fa-magic text-[10px]"></i> Auto
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">Dibuat otomatis oleh sistem saat disimpan.</p>
                 </div>
                 <div>
                     <label for="type_single" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
